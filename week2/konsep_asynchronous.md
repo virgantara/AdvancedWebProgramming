@@ -6,20 +6,10 @@ JS pada dasarnya adalah single-thread. Artinya, kode JS hanya dieksekusi sekali 
 ## Asynchronous
 Meskipun JS pada dasarnya synchronous, akan tetapi, JS juga bisa digunakan untuk asynchronous ketika ada beberapa proses yang perlu berjalan bersamaan tanpa mengganggu thread utama.   
 
-```js
-console.log("Mulai")
-
-setTimeout(() => {
-	console.log("Hai gaes")
-}, 2000)
-console.log("Selesai")
-```
-
-Menurut Anda, apa hasil ```console.log``` dari potongan kode di atas? 
-
 
 ## Callbacks
 Callback adalah sebuah fungsi yang digunakan sebagai parameter untuk fungsi lain.
+
 ### Contoh Callbacks dengan Synchronous
 ```js
 function hai(nama){
@@ -36,9 +26,24 @@ cobaInput(hai)
 ```
 
 Di contoh ini:
-- fungsi ``hai`` digunakan sebagai parameter pada fungsi ``cobaInput``
+- fungsi `hai` digunakan sebagai parameter pada fungsi `cobaInput`
 - baris kode `callback(nama)` dijalankan secara langsung. 
 
+Contoh callback synchronous bisa diakses di [sini](examples/js/callbacks_sync.js)
+
+### Contoh Callbacks dengan Asynchronous
+```js
+console.log("Mulai")
+
+setTimeout(() => {
+	console.log("Hai gaes")
+}, 2000)
+console.log("Selesai")
+```
+
+Menurut Anda, apa hasil `console.log` dari potongan kode di atas? 
+
+Contoh callback asynchronous bisa diakses di [sini](examples/js/callbacks_async.js)
 
 ## Promises
 
