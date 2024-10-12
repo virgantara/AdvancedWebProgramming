@@ -20,6 +20,11 @@ if ($conn->connect_error) {
 
 ?> 
 ```
+Untuk koneksi database, Anda bisa membuat sebuah file berekstensi php. Sebagai contoh, file tersebut bisa diberi nama db.php atau database.php. File ini nantinya akan diimport dengan memanggil syntax `require_once` di file php yang membutuhkan koneksi database. Jika file db.php sudah diimport, maka variabel `$conn` bisa digunakan di-scope file tersebut. 
+
+- Script `mysqli` memiliki 4 parameter secara berurutan, yaitu: `host`, `username`, `password`, dan `database`.  
+- Fungsi `if ($conn->connect_error)` berfungsi untuk mengecek apakah ada koneksi ke database yang error.
+- Fungsi syntax `die` adalah untuk menghentikan eksekusi runtime PHP dengan parameter tertentu.
 
 ## Query data
 
