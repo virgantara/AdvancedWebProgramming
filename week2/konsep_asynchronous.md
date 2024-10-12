@@ -49,7 +49,7 @@ fetchData(displayData);
 console.log('Selesai');
 ```
 
-Menurut Anda, apa hasil `console.log` dari potongan kode di atas? 
+Menurut Anda, apa hasil dari potongan kode di atas? 
 
 Contoh callback asynchronous bisa diakses di [sini](examples/js/callbacks_async.js)
 
