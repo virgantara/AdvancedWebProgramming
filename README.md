@@ -28,8 +28,8 @@ Learning Outcomes (LO):
 - Mahasiswa mampu mengimplementasikan asynchronous programming menggunakan Promise, Async, dan Await (LO2)
 
 Topik Pertemuan:
-- [Fungsi Arrow](week2/arrow_func.js)
-- [Deklarasi variabel dengan let dan const](week2/variabel.js)
+- [Fungsi Arrow](week2/examples/js/arrow_func.js)
+- [Deklarasi variabel dengan let dan const](week2/examples/js/variabel.js)
 - [Konsep Asynchronous Programming](week2/konsep_asynchronous.md)
 - Promises
 - Async/Await
