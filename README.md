@@ -30,7 +30,7 @@ Learning Outcomes (LO):
 Topik Pertemuan:
 - [Fungsi Arrow](week2/examples/js/arrow_func.js)
 - [Deklarasi variabel dengan let dan const](week2/examples/js/variabel.js)
-- [Konsep Asynchronous Programming](week2/konsep_asynchronous.md)
+- [Konsep Asynchronous Programming](week2/README.md)
 - [Promises](week2/Promises.md)
 - [Async/Await](week2/AsyncAwait.md)
 
