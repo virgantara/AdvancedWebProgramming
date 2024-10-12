@@ -27,5 +27,26 @@ Untuk koneksi database, Anda bisa membuat sebuah file berekstensi php. Sebagai c
 - Fungsi syntax `die` adalah untuk menghentikan eksekusi runtime PHP dengan parameter tertentu.
 
 ## Query data
+Untuk query data, sebagai contoh, buatlah sebuah file dengan nama `fetch.php`. 
+```php
+<?php 
+require_once "db.php";
+
+$sql = "SELECT nim, nama FROM mahasiswa ORDER BY nama LIMIT 10";
+
+$result = $conn->query($sql) or die($conn->error);
+
+while($row = $result->fetch_assoc()){
+    echo $row['nim'];
+    echo "&nbsp;";
+    echo $row['nama'];
+    echo "<br>";
+}
+
+
+$conn->close();
+?>
+```
+
 
 ## Insert data
