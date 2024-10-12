@@ -7,6 +7,11 @@ Learning Outcomes (LO):
 - Mahasiswa mampu mengoneksikan PHP dengan HTML dan DBMS MySQL (LO3)
 - Mahasiswa mampu mengimplementasikan kode PHP untuk Request dan Response Web (LO4)
 
+Prasyarat:
+- Lulus mata kuliah Pemrograman Web
+- Lulus mata kuliah Basis Data
+- Sudah menginstall Apache dan MySQl (XAMPP bisa sebagai alternatif)
+
 Topik Pertemuan:
 - Pengenalan PHP (Syntax PHP, struktur, fungsi, dan variabel)
 - Integrasi PHP dengan HTML
