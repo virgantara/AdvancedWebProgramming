@@ -1,6 +1,14 @@
-console.log("Mulai")
+function fetchData(callback) {
+    setTimeout(() => {
+        const data = 'Data loaded';
+        callback(data); 
+    }, 2000); // 
+}
 
-setTimeout(() => {
-	console.log("Hai gaes")
-}, 2000)
-console.log("Selesai")
+function displayData(data) {
+    console.log(data);
+}
+
+console.log('Mulai');
+fetchData(displayData);
+console.log('Selesai');
