@@ -13,4 +13,8 @@ Topik Pertemuan:
 - Pembuatan Form dan HTTP Method
 - Koneksi ke database
 
+Penugasan:
+- Buat program sederhana dengan PHP untuk mengoleksi data seperti pendaftaran peserta atau mahasiswa dan menampilkan secara dinamis
+- Kuis 1: PHP dasar, syntax, forms, dan integrasi PHP x HTML
+
 ## Week 2 - Modern Javascript ES6+
