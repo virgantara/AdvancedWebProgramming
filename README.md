@@ -31,9 +31,8 @@ Topik Pertemuan:
 - [Fungsi Arrow](week2/examples/js/arrow_func.js)
 - [Deklarasi variabel dengan let dan const](week2/examples/js/variabel.js)
 - [Konsep Asynchronous Programming](week2/konsep_asynchronous.md)
-- Promises
-- Async/Await
-- Callback
+- [Promises](week2/Promises.md)
+- [Async/Await](week2/AsyncAwait.md)
 
 Penugasan:
 - Tugas Mandiri 2: Buat program sederhana dengan PHP dan Javascript ES6+ untuk mengambil data dari API menggunakan promises dan async/await.
