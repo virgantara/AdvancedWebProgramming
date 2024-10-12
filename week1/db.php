@@ -1,7 +1,7 @@
 <?php
 $host = "localhost";
 $username = "root";
-$password = "4Dm1n_2022";
+$password = "";
 $dbname = "web_sekolah";
 
 // Create connection
