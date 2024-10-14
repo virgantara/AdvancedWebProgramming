@@ -13,7 +13,7 @@
 </head>
 <body>
     
-	<script type="module" src="examples/js/async_await.js?nocache=<?= time(); ?>" ></script>
+	<script type="module" src="examples/js/callbacks_async.js" ></script>
     <!-- <script type="module" src="arrow_func.js?nocache=<?= time(); ?>" ></script> -->
 </body>
 </html>

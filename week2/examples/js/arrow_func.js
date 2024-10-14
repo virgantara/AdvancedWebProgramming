@@ -1,7 +1,4 @@
 // Contoh Arrow Function
-let myFunction = (a, b) => {
-
-	return a * b + 2
-}; 
+let myFunction = (a, b) => a + b; 
 
 console.log(myFunction(2,3))

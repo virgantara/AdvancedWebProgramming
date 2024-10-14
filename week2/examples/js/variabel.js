@@ -24,7 +24,7 @@ function tesLet(flag){
 }
 
 // Contoh const
-function tesConst(flag){
+function tesConst(){
 	const x = 7
 	
 	const obj = {nama: "bejo"}
@@ -33,3 +33,5 @@ function tesConst(flag){
 
 	console.log(obj)
 }
+
+tesConst()
