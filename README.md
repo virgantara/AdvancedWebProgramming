@@ -45,7 +45,7 @@ Learning Outcomes (LO):
 - Mahasiswa mampu membuat aplikasi NodeJS sederhana yang berinteraksi dengan API eksternal menggunakan promises dan async/await.
 
 Topik Pertemuan:
-- [Intro ke NodeJS]()
+- [Intro ke NodeJS](week3/intro.md)
 - [Callback Hell](week2/AsyncAwait.md)
 - [Deskripsi Promise](week3/README.md)
 - [Promise Berantai](week2/examples/js/promises_chain.js)
