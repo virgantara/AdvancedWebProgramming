@@ -22,7 +22,7 @@ Penugasan:
 - Tugas Mandiri 1: Buat program sederhana dengan PHP untuk mengoleksi data seperti pendaftaran peserta atau mahasiswa dan menampilkan secara dinamis
 - Kuis 1: PHP dasar, syntax, forms, dan integrasi PHP x HTML
 
-## Week 2 - Modern Javascript ES6+
+## Week 2 - Modern Javascript ES6+ Part 1
 Learning Outcomes (LO):
 - Mahasiswa mampu memahami dan menerapkan syntax javascript modern (LO1)
 - Mahasiswa mampu mengimplementasikan asynchronous programming menggunakan Promise, Async, dan Await (LO2)
@@ -38,3 +38,19 @@ Penugasan:
 - Tugas Mandiri 2: Buat program sederhana dengan PHP dan Javascript ES6+ untuk mengambil data dari API menggunakan promises dan async/await.
 - Kuis 2: Konsep dasar ES6+, fungsi arrow, asynchronous, promises, dan callback
 
+## Week 3 - Modern Javascript ES6+ Part 2
+Learning Outcomes (LO):
+- Mahasiswa mampu memahami sifat asinkron dari Node.js dan pentingnya kode yang tidak memblokir.
+- Mahasiswa mampu menerapkan operasi asinkron menggunakan janji di Nodejs.
+- Mahasiswa mampu membuat aplikasi NodeJS sederhana yang berinteraksi dengan API eksternal menggunakan promises dan async/await.
+
+Topik Pertemuan:
+- [Intro ke NodeJS]()
+- [Callback Hell](week2/AsyncAwait.md)
+- [Deskripsi Promise](week3/README.md)
+- [Promise Berantai](week2/examples/js/promises_chain.js)
+
+
+Penugasan:
+- Tugas Mandiri 3: Buat program sederhana dengan PHP dan Javascript ES6+ untuk mengambil data dari API menggunakan promises dan async/await.
+- Kuis 3: Konsep dasar ES6+, fungsi arrow, asynchronous, promises, dan callback
