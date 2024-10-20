@@ -52,3 +52,34 @@ Node.js is a powerful, open-source, cross-platform runtime environment that allo
 
 - APIs (RESTful/GraphQL):
         Node.js is commonly used to build RESTful APIs that interact with databases and return JSON data. It is also used with GraphQL to build APIs that serve flexible and efficient data to the front end.
+
+## Contoh dari NodeJS
+- Buatlah sebuah file dengan nama hello.js
+- Letakkan di folder/direktori tertentu, misalkan: /home/user/belajarnodejs
+```js
+// Load the built-in http module
+const http = require('http');
+
+// Create an HTTP server
+const server = http.createServer((req, res) => {
+    // Set the response header content type
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    
+    // Send the response "Hello, World!"
+    res.end('Hello, World!\n');
+});
+
+// The server listens on port 3000
+server.listen(3000, () => {
+    console.log('Server is running at http://localhost:3000/');
+});
+```
+
+## Instalasi NodeJS
+Untuk menjalankan contoh kode NodeJS, pastikan sudah menginstall Node atau NPM. 
+- Download NPM di [https://nodejs.org/en/download/package-manager](https://nodejs.org/en/download/package-manager)
+- Buka terminal/command prompt/console/cmd
+- Pindah ke folder/direktori di tempat file NodeJs berada, misal `cd /home/user/belajarnodejs`
+- Ketik `node hello.js`
+- Buka browser, ketik di URL: `http://localhost:3000`
+
