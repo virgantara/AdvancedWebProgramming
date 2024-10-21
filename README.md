@@ -35,9 +35,7 @@ Topik Pertemuan:
 - [Async/Await](week2/AsyncAwait.md)
 
 Penugasan:
-- Tugas Mandiri 2: Buat program sederhana dengan PHP dan Javascript ES6+ untuk mengambil data dari API menggunakan promises dan async/await.
-- Kuis 2: Konsep dasar ES6+, fungsi arrow, asynchronous, promises, dan callback
-
+- (Tugas Mandiri 2)[week2/tugas.md]
 ## Week 3 - Modern Javascript ES6+ Part 2
 Learning Outcomes (LO):
 - Mahasiswa mampu memahami sifat asinkron dari Node.js dan pentingnya kode yang tidak memblokir.
@@ -52,5 +50,4 @@ Topik Pertemuan:
 
 
 Penugasan:
-- Tugas Mandiri 3: Buat program sederhana dengan PHP dan Javascript ES6+ untuk mengambil data dari API menggunakan promises dan async/await.
-- Kuis 3: Konsep dasar ES6+, fungsi arrow, asynchronous, promises, dan callback
+- Tugas Mandiri 3: Refactor kode Callback Hell dengan Promise dan pastikan pesan yang muncul di console sama dengan yang di Callback Hell.

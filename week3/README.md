@@ -121,3 +121,4 @@ apromise.then(res => {
 console.log('Selesai')
 ````
 Lihat contoh Promise berantai di [sini](examples/js/promises_chain.js)
+
