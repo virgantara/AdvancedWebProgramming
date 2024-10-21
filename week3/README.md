@@ -1,3 +1,5 @@
+## [Intro ke NodeJS](week3/intro.md)
+
 ## Callback Hell
 Dalam JavaScript (JS), callback adalah fungsi yang diteruskan ke fungsi lain untuk dieksekusi setelah operasi asinkron selesai. Callback Hell mengacu pada masalah di mana beberapa nested callback menciptakan "Pyramid of Doom", sehingga kode sulit dibaca, di-debug, dan dimaintain.
 
@@ -15,6 +17,15 @@ namaFungsi1(function(hasil1){
     })
 })
 ```
+
+### Contoh Skenario Callback Hell
+Di sini, saya mencontohkan skenario sederhana untuk Callback Hell
+- Koneksi ke db
+- Mengambil data user berdasarkan ID
+- Mengambil data yang posting oleh user
+- Mencatat pesan sukses setelah semua proses berjalan
+
+Adapun detil dari contoh ini, silakan dilihat di [sini](week3/examples/callback_hell.js)
 
 ## Promises
 Promise di JS adalah sebuah class/object yang mengurusi dan memastikan berhasil atau gagalnya suatu event asynchronous.
