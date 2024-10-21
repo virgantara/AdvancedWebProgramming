@@ -1,11 +1,11 @@
-let promise = new Promise((resolve, reject)=>{
-	console.log('Kode ini sedang dijalankan dari dalam Promise')
-
-	resolve('Promise Fulfilled')
+let p = new Promise((responOke, responGagal) => {
+	responOke("Promise sudah oke")
 })
 
-console.log('Kode dijalankan')
-
-promise.then(res => {
+p.then(res => {
+	console.log("Log oke")
 	console.log(res)
+}).catch(errornyaapa => {
+	console.log("Log tidak oke")
+	console.log(errornyaapa)
 })

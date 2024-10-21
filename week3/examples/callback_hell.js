@@ -1,4 +1,4 @@
-
+// Skenario 1
 function koneksiKeDatabase(callback) {
     console.log("Connecting to the database...");
     setTimeout(() => {
@@ -7,17 +7,18 @@ function koneksiKeDatabase(callback) {
     }, 1000);  // Simulating 1 second delay
 }
 
-
+// Skenario 2
 function getUserData(connection, userId, callback) {
     console.log(`Getting data for user with ID: ${userId}...`);
     setTimeout(() => {
+        // dict/list
         const user = { id: userId, name: "Bejo Sugiantoro" };
         console.log(`User data fetched:`, user);
         callback(null, user);
     }, 1000);  // Simulating 1 second delay
 }
 
-
+// Skenario 3
 function getUserPost(userId, callback) {
     console.log(`Querying posts for user with ID: ${userId}...`);
     setTimeout(() => {
@@ -31,22 +32,32 @@ function getUserPost(userId, callback) {
     }, 1000);  // Simulating 1 second delay
 }
 
-
+// Skenario 4 semua sudah oke
 function logPesan(callback) {
     console.log("Sudah beres semua gaes!");
     callback(null);
 }
 
 function jalankanCallbackHell(userId) {
-    koneksiKeDatabase((dbErr, connection) => {
-        getUserData(connection, userId, (userErr, user) => {
-            getUserPost(user.id, (postsErr, posts) => {
-                logPesan((logErr) => {
-                    console.log("Log terakhir.");
-                });
-            });
-        });
-    });
+
+    // Skenario 1
+    koneksiKeDatabase(function(error, koneksi){
+        // Skenario 2
+        getUserData(koneksi, userId, function(error, user){
+
+            // Skenario 3
+            getUserPost(user.id, function(error, posts){
+
+                // Skenario 4
+                logPesan(function(error){
+                    console.log("Sudah berakhir")
+                    
+                })
+            })
+        })
+    })
+
+    
 }
 
 jalankanCallbackHell(123);

@@ -27,7 +27,7 @@ Di sini, saya mencontohkan skenario sederhana untuk Callback Hell
 - Mengambil data yang posting oleh user
 - Mencatat pesan sukses setelah semua proses berjalan
 
-Adapun detil dari contoh ini, silakan dilihat di [sini](week3/examples/callback_hell.js)
+Adapun detil dari contoh ini, silakan dilihat di [sini](examples/callback_hell.js)
 
 ## Promises
 Promise di JS adalah sebuah class/object yang mengurusi dan memastikan berhasil atau gagalnya suatu event asynchronous.
