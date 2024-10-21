@@ -1,10 +1,9 @@
 ## Understanding let, const, var, and Asynchronous Programming with async/await
-
-This assignment will help you solidify your understanding of JavaScript variable declarations (`let`, `const`, and `var`) and asynchronous programming using `async/await`. You will work with asynchronous tasks and refactor a given code to correctly utilize `async/await` while maintaining good variable scope practices using `let`, `const`, and `var`.
+Tugas ini akan menguatkan pemahaman mahasiswa terhadap JavaScript variabel seperti `let`, `const`, dan `var` dan asynchronous programming dengan `async/await`. 
 
 ## Tugas:
 ### Task 1: Memahami scope variabel
-You are provided with the following code that incorrectly uses `var`, resulting in scope-related issues. Refactor the code to use `let` and `const` appropriately.
+Berikut ini adalah contoh kode yang kurang tepat dalam penggunaan `var` sehingga mengakibatkan kendala scope variabel. Refactor/ubah kode berikut hanya dengan `let` atau `const` dengan tepat.
 
 ```js
 function cetakAngka() {
@@ -18,12 +17,12 @@ function cetakAngka() {
 cetakAngka();  
 ```
 Instruksi:
-- Identify the Problem: Run the code and observe the output. Explain why the output is not as expected.
-- Refactor the Code: Refactor the code to use let and const appropriately. Ensure that each iteration prints the correct number at the correct time.
-- Comment Your Code: Explain why you chose let or const in different parts of the code.
+- Identifikasi permasalahan dengan cara jalankan kode dan perhatikan outputnya. Jelaskan kenapa outputnya diluar ekspektasi.
+- Refactor kode: Ubah kode dengan menggunakan `let` dan `const` dengan tepat. Pastikan setiap iterasi mencetak/print angka yang sesuai dengan waktu/time.
+- Berikan komentar pada kode (beri tanda `//`) dan jelaskan kenapa menggunakan `let` atau `const` dibeberapa bagian yang berbeda
 
 ### Task 2: Refactoring (Mengubah Struktur Kode) Callback ke async/await
-You are provided with the following code that uses callbacks to handle asynchronous tasks. Refactor this code using `async/await` to make it cleaner and more readable.
+Berikut ini adalah kode yang disediakan yang menggunakan callback. Refactor kode ini menggunakan `async/await`.
 ```js
 function fetchData(callback) {
     setTimeout(() => {
@@ -71,11 +70,16 @@ fetchData((fetchErr, fetchedData) => {
 
 ```
 
-Instructions:
-- Convert Callbacks to async/await:
--- Refactor the provided code to use async/await instead of callbacks.
--- Each function (fetchData, processData, and saveData) should return a promise.
-- Handle Errors:
--- Use try/catch blocks to handle errors in your asynchronous code.
--- Ensure that the code properly handles any potential errors that occur during the asynchronous operations.
-- Comment Your Code: Provide explanations for each change you make. Explain why async/await improves the readability and maintainability of the code.
+Instruksi:
+- Ubah Callbacks ke async/await:
+- Refactor kode yang disediakan dengan async/await.
+- Berikan komentar pada kodemu seperti penjelasan setiap perubahan yang dibuat dan jelaskan kenapa `async/await` bisa meningkatkan readability kode
+
+## Pengumpulan Tugas
+- Kirimkan tugasmu dalam bentuk file `.js` lewat Google Classroom
+- Pastikan kodemu sudah diberikan komentar `//` yang menjelaskan alasan pada tiap-tiap Task.
+- Patikan kodemu tidak ada error.
+
+## Rubrik Penilaian
+- Task 1 (40%): Ketepatan penggunaan dan penjelasan `let` dan `const`.
+- Task 2 (60%): Ketepatan refactoring kode dari callback ke `async/await`
