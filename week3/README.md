@@ -1,4 +1,6 @@
-## [Intro ke NodeJS](week3/intro.md)
+## Intro ke NodeJS
+
+NodeJS adalah runtime environment multi platform yang kuat dan open-source yang memungkinkan para pengembang menjalankan kode JavaScript di server-side. Dulunya, JavaScript hanya digunakan...[readmore](week3/intro.md).
 
 ## Callback Hell
 Dalam JavaScript (JS), callback adalah fungsi yang diteruskan ke fungsi lain untuk dieksekusi setelah operasi asinkron selesai. Callback Hell mengacu pada masalah di mana beberapa nested callback menciptakan "Pyramid of Doom", sehingga kode sulit dibaca, di-debug, dan dimaintain.
