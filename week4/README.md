@@ -51,3 +51,12 @@ app.listen(PORT, () => {
 1. Pindah ke direktori di mana file server.js tersimpan. 
 1. Jalankan perintah `node server.js`
 
+## Postman
+### Deskripsi
+Postman adalah software yang digunakan untuk menguji, mengembangkan, dan mendokumentasikan API (Application Programming Interface). Postman menyediakan interface untuk membuat dan mengirim permintaan HTTP, seperti GET, POST, PUT, dan DELETE, serta melihat respons yang dikembalikan oleh server. 
+
+### Instalasi
+Silakan unduh Postman di [sini](https://www.postman.com/downloads/)
+
+### Cara penggunaan Postman
+Terkait cara penggunaan, akan dipraktikkan secara langsung di kelas/lab
