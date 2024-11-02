@@ -9,13 +9,15 @@ RESTful, atau Representational State Transfer, adalah arsitektur yang digunakan 
 1. Stateless
 Setiap permintaan dari klien ke server harus berisi semua informasi yang diperlukan untuk memahami permintaan tersebut. Server tidak menyimpan status atau sesi antara permintaan, sehingga setiap permintaan bersifat independen.
 1. Penggunaan HTTP Method
-GET: Mengambil data dari server tanpa mengubah data. Digunakan untuk membaca sumber daya.
-POST: Menambahkan data baru ke server. Digunakan untuk membuat sumber daya baru.
-PUT: Memperbarui data yang ada di server. Digunakan untuk memperbarui sumber daya yang sudah ada.
-DELETE: Menghapus data dari server. Digunakan untuk menghapus sumber daya.
+
+- GET: Mengambil data dari server tanpa mengubah data. Digunakan untuk membaca sumber daya.
+- POST: Menambahkan data baru ke server. Digunakan untuk membuat sumber daya baru.
+- PUT: Memperbarui data yang ada di server. Digunakan untuk memperbarui sumber daya yang sudah ada.
+- DELETE: Menghapus data dari server. Digunakan untuk menghapus sumber daya.
 1. Resource berbasis URL
 1. Representasi resource yang mudah dibaca (JSON/XML)
 1. Sistem Berlapis
+
 REST mendukung sistem berlapis di mana klien tidak harus terhubung langsung ke server utama tetapi bisa melalui perantara (seperti load balancer atau proxy). Hal ini membuat REST lebih fleksibel dan aman.
 
 ## ExpressJS
