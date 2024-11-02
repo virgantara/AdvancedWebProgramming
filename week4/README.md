@@ -27,3 +27,27 @@ Express.js sangat cocok untuk aplikasi backend dan layanan REST API, baik untuk 
 ```code
 npm install express
 ```
+
+## Server
+Petunjuk menjalankan server:
+1. Buatlah sebuah file dengan nama apapun, misalnya server.js.
+1. Simpan file tersebut ke folder/direktori tertentu.
+1. Edit file tersebut, isikan kode berikut
+```javascript
+const express = require('express');
+
+const app = express();
+
+app.get('/', (req, res) => {
+    res.send('Hello, World!');
+});
+
+const PORT = 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});
+```
+1. Buka terminal atau command prompt. Untuk sistem operasi Windows, tekan tombol windows + R, ketik cmd.
+1. Pindah ke direktori di mana file server.js tersimpan. 
+1. Jalankan perintah `node server.js`
+
