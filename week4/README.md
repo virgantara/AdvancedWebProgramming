@@ -1,4 +1,4 @@
-# Introduction to RESTful Services with Express
+# Introduction to RESTful Services with ExpressJS
 In this course, you will learn Node.js fundamentals, setting up Express, handling HTTP requests, and integrating APIs with HTML.
 
 ## ExpressJS
@@ -21,3 +21,9 @@ Express.js adalah kerangka kerja aplikasi web untuk Node.js yang dirancang untuk
 8. **Performance dan Skala**: Karena berjalan di Node.js, Express memiliki kinerja yang cepat dan dapat menangani banyak permintaan secara simultan, menjadikannya pilihan populer untuk aplikasi yang memerlukan skala besar atau performa tinggi.
 
 Express.js sangat cocok untuk aplikasi backend dan layanan REST API, baik untuk proyek kecil maupun besar.
+
+## Instalasi ExpressJS
+
+```code
+npm install express
+```
