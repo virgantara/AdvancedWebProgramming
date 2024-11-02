@@ -38,26 +38,45 @@ function logPesan(callback) {
     callback(null);
 }
 
-function jalankanCallbackHell(userId) {
-
-    // Skenario 1
-    koneksiKeDatabase(function(error, koneksi){
-        // Skenario 2
-        getUserData(koneksi, userId, function(error, user){
-
-            // Skenario 3
-            getUserPost(user.id, function(error, posts){
-
-                // Skenario 4
+function jalakanCallback(userId){
+    // callback skenario 1
+    koneksiKeDatabase(function(error, pesanKoneksi){
+        // callback skenario 2
+        getUserData(pesanKoneksi, userId, function(error, user){
+            // callback skenario 3
+            getUserPost(userId, function(error, posts){
                 logPesan(function(error){
-                    console.log("Sudah berakhir")
-                    
+                    console.log("Pesan tambahan akhir")
                 })
             })
-        })
+        })    
     })
 
     
 }
 
-jalankanCallbackHell(123);
+jalakanCallback(111)
+
+// function jalankanCallbackHell(userId) {
+
+//     // Skenario 1
+//     koneksiKeDatabase(function(error, koneksi){
+//         // Skenario 2
+//         getUserData(koneksi, userId, function(error, user){
+
+//             // Skenario 3
+//             getUserPost(user.id, function(error, posts){
+
+//                 // Skenario 4
+//                 logPesan(function(error){
+//                     console.log("Sudah berakhir")
+                    
+//                 })
+//             })
+//         })
+//     })
+
+    
+// }
+
+// jalankanCallbackHell(123);
