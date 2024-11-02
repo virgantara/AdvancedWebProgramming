@@ -67,16 +67,13 @@ app.listen(PORT, () => {
 1. Pindah ke direktori di mana file server.js tersimpan. 
 1. Jalankan perintah `node server.js`
 
-## Postman
+## `curl`
 ### Deskripsi
-Postman adalah software yang digunakan untuk menguji, mengembangkan, dan mendokumentasikan API (Application Programming Interface). Postman menyediakan interface untuk membuat dan mengirim permintaan HTTP, seperti GET, POST, PUT, dan DELETE, serta melihat respons yang dikembalikan oleh server. 
+`curl` adalah alat command-line yang berguna untuk mengirim permintaan HTTP ke server. Berikut adalah beberapa contoh dasar cara menggunakan curl untuk melakukan berbagai permintaan HTTP.
 
-### Instalasi
-Silakan unduh Postman di [sini](https://www.postman.com/downloads/)
-
-### Cara penggunaan Postman
-Terkait cara penggunaan, akan dipraktikkan secara langsung di kelas/lab
-
+### Pengecekan instalasi `curl`
+1. Buka terminal atau command prompt. Untuk sistem operasi Windows, tekan tombol windows + R, ketik cmd.
+1. Jalankan perintah `curl --help`
 
 ## Server dengan Response JSON
 Update kode script file server.js dengan kode berikut:
@@ -84,14 +81,29 @@ Update kode script file server.js dengan kode berikut:
 const express = require('express');
 
 const app = express();
+app.use(express.json());
 
 app.get('/', (req, res) => {
 
     var data = {
       'code': 200,
       'status': 'Ok',
-      'message': 'Halo'
+      'message': 'Hello World'
     };
+
+    res.json(data);
+    res.end();
+});
+
+app.post('/kirim', (req, res) => {
+    var data = {
+      'code': 200,
+      'status': 'Ok',
+      'message': req.body
+    };
+
+    console.log('Request Headers:', req.headers);
+    console.log('Request Body:', req.body);
 
     res.json(data);
     res.end();
@@ -101,4 +113,17 @@ const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
+```
+
+## Contoh HTTP Request dengan `curl`
+1. GET Request: Permintaan GET digunakan untuk mengambil data dari server.
+```bash
+curl -X GET http://localhost:3000
+```
+
+1. POST Request: Permintaan POST digunakan untuk mengirim data ke server, seperti untuk menambah sumber daya baru.
+```bash
+curl -X POST  http://localhost:3000/kirim \
+-H "Content-Type: application/json" \
+-d '{"nama" : "Budi", "hp" : "123"}'
 ```
