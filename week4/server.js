@@ -3,7 +3,15 @@ const express = require('express');
 const app = express();
 
 app.get('/', (req, res) => {
-    res.send('Hello, World!');
+
+    var data = {
+      'code': 200,
+      'status': 'Ok',
+      'message': 'Hello World'
+    };
+
+    res.json(data);
+    res.end();
 });
 
 const PORT = 3000;

@@ -1,6 +1,23 @@
 # Introduction to RESTful Services with ExpressJS
 In this course, you will learn Node.js fundamentals, setting up Express, handling HTTP requests, and integrating APIs with HTML.
 
+## RESTful
+### Deskripsi
+RESTful, atau Representational State Transfer, adalah arsitektur yang digunakan untuk merancang web service yang memungkinkan komunikasi antar sistem melalui protokol HTTP. RESTful API, atau API berbasis REST, dirancang secara sederhana, fleksibel, dan mudah digunakan, mengikuti prinsip-prinsip REST yang memperlakukan setiap sumber daya dalam sistem sebagai objek yang dapat dimanipulasi melalui URL tertentu.
+
+### Prinsip-Prinsip REST
+1. Stateless
+Setiap permintaan dari klien ke server harus berisi semua informasi yang diperlukan untuk memahami permintaan tersebut. Server tidak menyimpan status atau sesi antara permintaan, sehingga setiap permintaan bersifat independen.
+1. Penggunaan HTTP Method
+GET: Mengambil data dari server tanpa mengubah data. Digunakan untuk membaca sumber daya.
+POST: Menambahkan data baru ke server. Digunakan untuk membuat sumber daya baru.
+PUT: Memperbarui data yang ada di server. Digunakan untuk memperbarui sumber daya yang sudah ada.
+DELETE: Menghapus data dari server. Digunakan untuk menghapus sumber daya.
+1. Resource berbasis URL
+1. Representasi resource yang mudah dibaca (JSON/XML)
+1. Sistem Berlapis
+REST mendukung sistem berlapis di mana klien tidak harus terhubung langsung ke server utama tetapi bisa melalui perantara (seperti load balancer atau proxy). Hal ini membuat REST lebih fleksibel dan aman.
+
 ## ExpressJS
 Express.js adalah kerangka kerja aplikasi web untuk Node.js yang dirancang untuk memudahkan pengembangan aplikasi dan API web. Express.js adalah salah satu framework web yang populer karena kemudahan penggunaannya dan kemampuannya untuk menangani aplikasi skala besar dengan cepat dan efisien. Berikut adalah beberapa poin utama tentang Express.js:
 
@@ -60,3 +77,7 @@ Silakan unduh Postman di [sini](https://www.postman.com/downloads/)
 
 ### Cara penggunaan Postman
 Terkait cara penggunaan, akan dipraktikkan secara langsung di kelas/lab
+
+
+## Server dengan Response JSON
+Dalam 
