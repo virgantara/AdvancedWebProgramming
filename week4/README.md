@@ -79,4 +79,26 @@ Terkait cara penggunaan, akan dipraktikkan secara langsung di kelas/lab
 
 
 ## Server dengan Response JSON
-Dalam 
+Update kode script file server.js dengan kode berikut:
+```node
+const express = require('express');
+
+const app = express();
+
+app.get('/', (req, res) => {
+
+    var data = {
+      'code': 200,
+      'status': 'Ok',
+      'message': 'Halo'
+    };
+
+    res.json(data);
+    res.end();
+});
+
+const PORT = 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});
+```
