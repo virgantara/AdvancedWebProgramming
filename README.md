@@ -22,6 +22,7 @@ Penugasan:
 - Tugas Mandiri 1: Buat program sederhana dengan PHP untuk mengoleksi data seperti pendaftaran peserta atau mahasiswa dan menampilkan secara dinamis
 - Kuis 1: PHP dasar, syntax, forms, dan integrasi PHP x HTML
 
+
 ## Week 2 - Modern Javascript ES6+ Part 1
 Learning Outcomes (LO):
 - Mahasiswa mampu memahami dan menerapkan syntax javascript modern (LO1)
