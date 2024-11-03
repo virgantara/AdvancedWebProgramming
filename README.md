@@ -51,3 +51,12 @@ Topik Pertemuan:
 
 Penugasan:
 - Tugas Mandiri 3: Refactor kode Callback Hell dengan Promise dan pastikan pesan yang muncul di console sama dengan yang di Callback Hell.
+
+## Week 4 - Introduction to RESTful Services with ExpressJS
+In this course, you will learn Node.js fundamentals, setting up Express, handling HTTP requests, and integrating APIs with HTML.
+
+Topik Pertemuan:
+- Pengenalan RESTful
+- ExpressJS
+- `curl`
+- HTTP Request
