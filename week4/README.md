@@ -141,16 +141,10 @@ curl -X POST  http://localhost:3000/kirim \
 | `multipart/form-data`                                | Used for sending form data that includes files.               |
 | `application/octet-stream`                           | Binary data, used for arbitrary binary data (e.g., files).    |
 | `application/pdf`                                    | PDF files.                                                    |
-| `application/zip`                                    | ZIP files.                                                    |
 | `application/msword`                                 | Microsoft Word documents.                                     |
 | `application/vnd.ms-excel`                           | Microsoft Excel files.                                        |
 | `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet` | Excel files (xlsx) with the OpenXML format. |
 | `image/jpeg`                                         | JPEG image format.                                            |
 | `image/png`                                          | PNG image format.                                             |
 | `image/gif`                                          | GIF image format.                                             |
-| `image/webp`                                         | WebP image format.                                            |
-| `audio/mpeg`                                         | MP3 audio format.                                             |
-| `audio/ogg`                                          | OGG audio format.                                             |
-| `video/mp4`                                          | MP4 video format.                                             |
-| `video/ogg`                                          | OGG video format.                                             |
-| `video/webm`                                         | WebM video format.                                            |
+
