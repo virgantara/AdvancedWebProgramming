@@ -3,7 +3,7 @@ In this course, you will learn Node.js fundamentals, setting up Express, handlin
 
 ## RESTful
 
-![Arsitektur RESTful](restful.jpg)
+![Arsitektur RESTful](./restful.jpg)
 
 ### Deskripsi
 RESTful, atau Representational State Transfer, adalah arsitektur yang digunakan untuk merancang web service yang memungkinkan komunikasi antar sistem melalui protokol HTTP. RESTful API, atau API berbasis REST, dirancang secara sederhana, fleksibel, dan mudah digunakan, mengikuti prinsip-prinsip REST yang memperlakukan setiap sumber daya dalam sistem sebagai objek yang dapat dimanipulasi melalui URL tertentu.
