@@ -1,5 +1,4 @@
 *.txt
-*.jpg
 week4/node_modules/**
 node_modules/**
 package-lock.json
