@@ -10,8 +10,8 @@ HTTP Methods:<br>
 2. POST: Create new data.
 3. PUT: Update existing data.
 4. DELETE: Delete data.
-Mapping CRUD Operations to HTTP Methods:<br>
+<br>Mapping CRUD Operations to HTTP Methods:<br>
 1. Create → POST
-1. Read → GET
-1. Update → PUT
-1. Delete → DELETE
+2. Read → GET
+3. Update → PUT
+4. Delete → DELETE
