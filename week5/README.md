@@ -37,17 +37,27 @@ API endpoint bekerja dengan menghubungkan API dari klien dan server termasuk men
 Di sini, dicontohkan beberapa penerapan endpoint sederhana untuk simulasi operasi Create, Read, Update, dan Delete (CRUD).
 Tambahkan file dengan nama server.js di working directory. Jalankan perintah `npm i express`.
 Berikut ini adalah kode dari server.js:
+#### 1. Load modul `express`
 ```javascript
 const express = require('express');
 
 const app = express();
 app.use(express.json());
 
+```
+
+#### 2. Simulasi database dengan array dinamis
+Di sini, untuk simulasi CRUD, digunakan array yang berisi daftar mahasiswa. Data setiap elemen hanya nim dan nama. Berikut contoh array tersebut:
+```javascript
 let list_mahasiswa = [
     {nim: 432022611001, nama : 'Budi'},
     {nim: 432022611002, nama : 'Agus'},
     {nim: 432022611003, nama : 'Susi'},
 ]
+```
+
+#### 3. Endpoint untuk mendapatkan semua daftar mahasiswa
+```javascript
 
 app.get('/api/mahasiswa', (req, res) => {
 
@@ -56,6 +66,10 @@ app.get('/api/mahasiswa', (req, res) => {
     res.end();
 });
 
+```
+
+#### 4. Endpoint untuk menambahkan seorang mahasiswa
+```javascript
 app.post('/api/mahasiswa/add', (req, res) => {
     
     let mhs = {
@@ -67,6 +81,10 @@ app.post('/api/mahasiswa/add', (req, res) => {
     res.end();
 });
 
+```
+
+#### 5. Endpoint untuk mengupdate seorang mahasiswa berdasarkan nim
+```javascript
 app.put('/api/mahasiswa/update/:nim', (req, res) => {
     let hasil = {
         code: 404,
@@ -99,8 +117,10 @@ app.put('/api/mahasiswa/update/:nim', (req, res) => {
     res.json(hasil);
     res.end();
 });
+```
 
-
+#### 6. Endpoint untuk menghapus seorang mahasiswa berdasarkan nim
+```javascript
 app.delete('/api/mahasiswa/delete/:nim', (req, res) => {
     let hasil = {
         code: 404,
@@ -130,6 +150,10 @@ app.delete('/api/mahasiswa/delete/:nim', (req, res) => {
     res.end();
 });
 
+```
+
+#### 7. Script untuk running ExpressJS
+```javascript
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
