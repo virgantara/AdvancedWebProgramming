@@ -5,7 +5,7 @@ app.use(express.json());
 
 app.get('/', (req, res) => {
 
-    var data = {
+    let data = {
       'code': 200,
       'status': 'Ok',
       'message': 'Hello World'
@@ -24,7 +24,7 @@ app.post('/kirim', (req, res) => {
 
     console.log('Request Headers:', req.headers);
     console.log('Request Body:', req.body);
-
+    
     res.json(data);
     res.end();
 });
