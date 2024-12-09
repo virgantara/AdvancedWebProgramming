@@ -17,7 +17,7 @@ app.get('/api/mahasiswa', (req, res) => {
 });
 
 app.post('/api/mahasiswa/add', (req, res) => {
-    
+    console.log(req)
     let mhs = {
         nim: req.body.nim,
         nama: req.body.nama
