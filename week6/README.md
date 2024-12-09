@@ -50,7 +50,11 @@ INSERT INTO mahasiswa (nim, nama, usia) VALUES
 npm install mysql
 ```
 
+
 2. Code for database connection:
+
+Buatlah sebuah file dengan nama db.js
+
 ```javascript
 const mysql = require('mysql');
 
@@ -161,6 +165,32 @@ app.delete('/api/mahasiswa/:id', (req, res) => {
 });
 
 ```
+
+## Pembuatan Server
+### Instalasi library yang diperlukan
+`npm install express body-parser cors`
+
+Buatlah file dengan nama server.js. Isinya sebagai berikut:
+```javascript
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const db = require('./db');
+
+const app = express();
+const PORT = 3000;
+
+// Middleware
+app.use(cors());
+app.use(bodyParser.json());
+
+// script routing taruh disini
+
+// Start the server
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});
+````
 
 ## Testing CRUD APIs 
 1. Testing APIs using curl and Postman
