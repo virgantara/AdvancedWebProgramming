@@ -1,4 +1,19 @@
 # PHP Dasar dan Koneksi dengan DBMS MySQL
+Learning Outcomes (LO):
+- Mahasiswa memahami fungsi PHP untuk pemrograman server-side (LO1)
+- Mahasiswa mampu menulis script PHP dasar untuk Form Handling, Variable, dan Data Processing (LO2)
+- Mahasiswa mampu mengoneksikan PHP dengan HTML dan DBMS MySQL (LO3)
+- Mahasiswa mampu mengimplementasikan kode PHP untuk Request dan Response Web (LO4)
+
+Topik Pertemuan:
+- [Pengenalan PHP (Syntax PHP, struktur, fungsi, dan variabel)](week01/README.md)
+- Integrasi PHP dengan HTML
+- Pembuatan Form dan HTTP Method
+- Koneksi ke database
+
+Penugasan:
+- Tugas Mandiri 1: Buat program sederhana dengan PHP untuk mengoleksi data seperti pendaftaran peserta atau mahasiswa dan menampilkan secara dinamis
+- Kuis 1: PHP dasar, syntax, forms, dan integrasi PHP x HTML
 
 ## Konsep Dasar PHP dan konektivitas dengan MySQL
 PHP adalah salah satu bahasa pemrograman yang mendukung konektivitas dengan beberapa jenis DBMS seperti MySQL, PostgreSQL, SQLServer, dll. Ada dua library yang sering digunakan untuk koneksi database, PDO dan MySQLi. PDO merupakan singkatan dari PHP Data Object. PDO mendukung kurang lebih 12 DBMS. Sedangkan MySQLi lebih spesifik untuk MySQL. 
