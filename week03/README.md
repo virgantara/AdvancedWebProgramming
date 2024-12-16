@@ -1,5 +1,20 @@
 ## Intro ke NodeJS
 
+Learning Outcomes (LO):
+- Mahasiswa mampu memahami sifat asinkron dari Node.js dan pentingnya kode yang tidak memblokir.
+- Mahasiswa mampu menerapkan operasi asinkron menggunakan janji di Nodejs.
+- Mahasiswa mampu membuat aplikasi NodeJS sederhana yang berinteraksi dengan API eksternal menggunakan promises dan async/await.
+
+Topik Pertemuan:
+- [Intro ke NodeJS](intro.md)
+- [Callback Hell](../week02/AsyncAwait.md)
+- [Deskripsi Promise](README.md)
+- [Promise Berantai](../week02/examples/js/promises_chain.js)
+
+
+Penugasan:
+- Tugas Mandiri 3: Refactor kode Callback Hell dengan Promise dan pastikan pesan yang muncul di console sama dengan yang di Callback Hell.
+
 NodeJS adalah runtime environment multi platform yang kuat dan open-source yang memungkinkan para pengembang menjalankan kode JavaScript di server-side. Dulunya, JavaScript hanya digunakan...[readmore](intro.md).
 
 ## Callback Hell

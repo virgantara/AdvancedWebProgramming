@@ -1,5 +1,19 @@
 # Konsep Asynchronous Programming di JavaScript (JS)
 
+Learning Outcomes (LO):
+- Mahasiswa mampu memahami dan menerapkan syntax javascript modern (LO1)
+- Mahasiswa mampu mengimplementasikan asynchronous programming menggunakan Promise, Async, dan Await (LO2)
+
+Topik Pertemuan:
+- [Fungsi Arrow](examples/js/arrow_func.js)
+- [Deklarasi variabel dengan let dan const](examples/js/variabel.js)
+- [Konsep Asynchronous Programming](README.md)
+- [Promises](Promises.md)
+- [Async/Await](AsyncAwait.md)
+
+Penugasan:
+- (Tugas Mandiri 2)[week2/tugas.md]
+
 ## Synchronous
 JS pada dasarnya adalah single-thread. Artinya, kode JS hanya dieksekusi sekali dalam satu waktu. 
 

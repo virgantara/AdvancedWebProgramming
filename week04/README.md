@@ -1,6 +1,12 @@
 # Introduction to RESTful Services with ExpressJS
 In this course, you will learn Node.js fundamentals, setting up Express, handling HTTP requests, and integrating APIs with HTML.
 
+Topik Pertemuan:
+- Pengenalan RESTful
+- ExpressJS
+- `curl`
+- HTTP Request
+
 ## RESTful
 
 ![Arsitektur RESTful](./restful.jpg)

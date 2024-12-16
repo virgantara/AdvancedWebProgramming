@@ -6,7 +6,7 @@ Learning Outcomes (LO):
 - Mahasiswa mampu mengimplementasikan kode PHP untuk Request dan Response Web (LO4)
 
 Topik Pertemuan:
-- [Pengenalan PHP (Syntax PHP, struktur, fungsi, dan variabel)](week01/README.md)
+- Pengenalan PHP (Syntax PHP, struktur, fungsi, dan variabel)
 - Integrasi PHP dengan HTML
 - Pembuatan Form dan HTTP Method
 - Koneksi ke database
