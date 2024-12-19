@@ -12,3 +12,12 @@ Prasyarat:
 ## [Week 5 - Build basic APIs, handle HTTP methods with Express](week05/README.md)
 ## [Week 6 - Connect APIs to databases for CRUD operations using Express.](week06/README.md)
 ## [Week 7 - Web Security - Authentication and Authorization in NodeJS](week07/README.md)
+## [Week 8 - Individual Mini-Project]()
+## [Week 9 - Introduction to OAuth2](week09/README.md)
+## [Week 10 - Web Security - Data Security with Encryption](week10/README.md)
+## [Week 11 - Data Security - ]
+## [Week 12	- ]
+## [Week 13 - ]
+## [Week 14 - ]
+## [Week 15 - ]
+## [Week 16 - ]
