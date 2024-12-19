@@ -1,10 +1,20 @@
 # Data Security with Encryption
 
 ## Introduction to Encryption
-Enkripsi adalah proses mengubah data asli (plaintext) menjadi bentuk yang tidak dapat dibaca (ciphertext) untuk melindungi data dari akses yang tidak diizinkan. Enkripsi dapat dibagi menjadi dua jenis utama:
+Enkripsi adalah salah satu teknik utama dalam kriptografi yang digunakan untuk menjaga kerahasiaan informasi. Enkripsi bekerja dengan mengubah data asli (plaintext) menjadi data yang tidak dapat dibaca atau dipahami (ciphertext). Proses ini dilakukan dengan menggunakan algoritma enkripsi dan sebuah kunci (key). Untuk mengembalikan ciphertext menjadi plaintext, digunakan proses kebalikan yang disebut dekripsi. Enkripsi dapat dibagi menjadi dua jenis utama:
 
 - Enkripsi Simetris: Menggunakan satu kunci untuk proses enkripsi dan dekripsi (contoh: AES).
 - Enkripsi Asimetris: Menggunakan pasangan kunci publik dan kunci privat untuk enkripsi dan dekripsi (contoh: RSA).
+
+Dalam kriptografi, terdapat beberapa istilah penting yang sering digunakan, seperti **key (kunci)** dan **IV (Initialization Vector)**. Berikut penjelasan yang lebih mendalam mengenai istilah-istilah tersebut.
+
+## Apa itu Key (Kunci)?
+
+Key atau kunci adalah elemen penting dalam proses enkripsi dan dekripsi. Key berfungsi sebagai parameter yang digunakan oleh algoritma kriptografi untuk mengubah data asli (plaintext) menjadi data terenkripsi (ciphertext) dan sebaliknya. Tanpa key yang benar, data terenkripsi tidak dapat dikembalikan ke bentuk aslinya.
+
+## Apa itu IV (Initialization Vector)?
+
+IV (Initialization Vector) adalah nilai unik yang digunakan bersama dengan key dalam proses enkripsi untuk memastikan bahwa data yang sama akan dienkripsi menjadi ciphertext yang berbeda setiap kali proses enkripsi dilakukan. IV umumnya digunakan dalam algoritma enkripsi simetris seperti AES dengan mode operasi seperti CBC (Cipher Block Chaining) atau CFB (Cipher Feedback). Keuntungan dari menggunakan IV yaitu menghindari pola yang berulang dalam ciphertext meskipun plaintext dan key yang digunakan sama. Dalam penggunaannya, IV tidak perlu disembunyikan seperti key, tetapi harus dibuat secara acak dan unik untuk setiap sesi enkripsi.
 
 ## Symmetric Encryption
  **Symmetric Encryption** atau enkripsi simetris adalah metode enkripsi yang menggunakan satu kunci yang sama untuk proses enkripsi dan dekripsi. Artinya, baik saat mengubah data asli (plaintext) menjadi data terenkripsi (ciphertext) maupun saat mengembalikan data terenkripsi menjadi data asli, kunci yang digunakan tetap sama. Contoh algoritma enkripsi simetris yang populer adalah **AES (Advanced Encryption Standard)**. AES banyak digunakan karena kecepatan dan keamanannya, terutama dalam mengamankan komunikasi data yang berlangsung secara real-time, seperti komunikasi antara server dan klien.
@@ -52,10 +62,9 @@ Modul `crypto` di NodeJS menyediakan fungsionalitas kriptografi yang mencakup se
 ### Fitur-fitur `crypto`
 `crypto` memiliki beberapa fitur berikut:
 1. Hashing data.
-2. Encrypting and decrypting data using symmetric and asymmetric algorithms.
-3. Generating cryptographic signatures dan verifying them.
-4. Creating secure random numbers and keys.
-
+2. Enkripsi dan dekripsi data dengan algoritma simetris dan asimetris
+3. Membuat signature kriptografi dan verifikasi
+4. Membuat angka random dan kunci yang aman
 
 ## Contoh Enkripsi Simetris
 Di sini, saya contohkan bagaimana mengenkripsi pesan teks menggunakan salah satu teknik enkripsi simetris yaitu AES. Contoh ini saya buat dengan menggunakan NodeJS.
@@ -66,3 +75,49 @@ Di sini, saya contohkan bagaimana mengenkripsi pesan teks menggunakan salah satu
 const crypto = require('crypto');
 ```
 
+4. Inisiasi `key` dan `IV`
+```javascript
+const key = crypto.randomBytes(32);
+const iv = crypto.randomBytes(16);
+```
+
+5. Membuat fungsi untuk enkrip.
+```javascript
+function encrypt(pesan) {
+    const cipher = crypto.createCipheriv('aes-256-cbc', key, iv)
+    let encrypted = cipher.update(pesan, 'utf8', 'hex')
+    encrypted += cipher.final('hex')
+    return { 
+        encryptedData: encrypted, 
+        iv: iv.toString('hex') 
+    }
+}
+```
+
+6. Membuat fungsi dekrip
+```javascript
+function decrypt(pesanTerenkripsi, ivHex){
+    const decipher = crypto.createDecipheriv('aes-256-cbc',key, Buffer.from(ivHex,'hex'))
+
+    let decrypted = decipher.update(encryptedData, 'hex','utf8')
+
+    decrypted += decipher.final('utf8')
+
+    return decrypted
+}
+```
+
+7. Penggunaan fungsi `encrypt()` dan `decrypt()`
+```javascript
+const {encrypt, decrypt} = require('./enkripsi_aes.js')
+
+const teks = "Assalamualaikum"
+const encrypted = encrypt(teks)
+
+console.log("Pesan terenkripsi:", encrypted.encryptedData)
+
+const pesanDekripsi = decrypt(encrypted.encryptedData, encrypted.iv)
+console.log("Pesan asli:", pesanDekripsi)
+```
+8. Catatan tambahan
+Fungsi `encrypt()` dan `decrypt()` serta kode pada nomor 3 hingga 6 saya taruh pada file dengan nama `enkripsi_aes.js`. File ini saya gunakan sebagai `module` untuk memudahkan pengelolaan kode dalam NodeJS
