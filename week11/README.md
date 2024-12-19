@@ -1,193 +1,58 @@
-# Node.js app using RSA keys generated with OpenSSL and bcrypt hashing
+# Week 9 - Introduction to OAuth2
+Topics:
+- Introduction to OAuth2
+- Why OAuth2
+- OAuth2 vs Traditional Username & Password
 
-Pada akhir pertemuan ini, mahasiswa diharapkan dapat:
+## Introduction to OAuth2
+What is OAuth2?
 
-1. Memahami konsep dasar enkripsi dan hashing.
-2. Mengetahui perbedaan antara enkripsi dan hashing.
-3. Menjelaskan berbagai algoritma enkripsi dan hashing.
-4. Menentukan kapan harus menggunakan enkripsi dan hashing.
-5. Mengimplementasikan contoh enkripsi dan hashing dalam Node.js.
+1. OAuth2 Terminology:
+- Client: The application requesting access.
+- Resource Owner: The user granting access.
+- Authorization Server: Issues tokens after authentication.
+- Resource Server: Hosts the protected resources.
 
-## Introduction to Encryption
-Enkripsi adalah proses mengubah data asli (plaintext) menjadi bentuk yang tidak dapat dibaca (ciphertext) untuk melindungi data dari akses yang tidak diizinkan. Enkripsi dapat dibagi menjadi dua jenis utama:
+2. OAuth2 Grant Types:
+- Authorization Code (most common for web applications).
+- Implicit (used in legacy single-page applications).
+- Client Credentials (machine-to-machine authentication).
+- Password Grant (for trusted clients).
 
-- Enkripsi Simetris: Menggunakan satu kunci untuk proses enkripsi dan dekripsi (contoh: AES).
-- Enkripsi Asimetris: Menggunakan pasangan kunci publik dan kunci privat untuk enkripsi dan dekripsi (contoh: RSA).
+3. OAuth2 Flow:
+- The client requests authorization.
+- The user grants permission.
+- The authorization server issues an access token.
+- The client uses the access token to access protected resources.
 
-Contoh Penggunaan:
+OAuth2 adalah protokol otorisasi yang digunakan untuk memberikan akses aman ke sumber daya tanpa harus membagikan kredensial (seperti username dan password) langsung ke aplikasi pihak ketiga. Misalnya, saat login dengan akun Google di aplikasi lain, OAuth2 memungkinkan Google untuk memberikan akses terbatas kepada aplikasi tersebut tanpa mengungkapkan password pengguna.
 
-- Mengamankan data saat dikirim melalui jaringan.
-- Melindungi informasi sensitif seperti kartu kredit.
+## Why OAuth2
+- Keamanan: Menghindari praktik buruk seperti berbagi password.
+- Kontrol Akses: Pengguna dapat memberikan izin spesifik ke aplikasi pihak ketiga (misalnya, hanya akses ke profil, bukan semua data).
+- Stateless Authentication: Token digunakan untuk menyimpan informasi, tidak perlu menyimpan sesi di server.
+- Fleksibilitas: Mendukung berbagai jenis aplikasi (web, mobile, API).
+- Single Sign-On (SSO): Login sekali untuk mengakses berbagai layanan.
 
-## Introduction to Hash
-Penjelasan:
+OAuth2 lebih aman dibandingkan metode tradisional karena pengguna tidak perlu membagikan password mereka dengan aplikasi pihak ketiga. Dengan OAuth2, akses dapat dibatasi sesuai kebutuhan, misalnya hanya membaca data profil tanpa akses penuh ke akun. OAuth2 juga mendukung konsep Stateless Authentication, di mana informasi pengguna disimpan dalam token, sehingga server tidak perlu menyimpan sesi.
 
-Hashing adalah proses mengubah data menjadi rangkaian karakter tetap (hash) menggunakan fungsi hash. Berbeda dengan enkripsi, hashing bersifat one-way (tidak dapat dikembalikan ke bentuk aslinya).
-Contoh Algoritma Hashing:
+## OAuth2 vs Traditional Username & Password
+1. Traditional Authentication:
 
-- MD5 (sudah tidak direkomendasikan).
-- SHA-256 (umum digunakan).
-- bcrypt (untuk hashing password).
+- Login menggunakan username dan password.
+- Menyimpan sesi di server.
+- Risiko keamanan seperti pencurian password dan Session Hijacking.
 
-Contoh Penggunaan:
+2. OAuth2 Authentication:
 
-- Menyimpan password di database.
-- Memeriksa integritas file.
+- Menggunakan token sebagai pengganti sesi.
+- Tidak perlu membagikan password dengan aplikasi pihak ketiga.
+- Dukungan untuk izin akses yang terbatas.
 
-## Encryption vs Hash
-Encryption:
-1. Bertujuan mengamankan data agar dapat dikembalikan
-2. Prosesnya Two-way (bisa dienkripsi & didekripsi).
-3. Contoh penggunaannya adalah ketika pengiriman data aman melalui jaringan.
-4. Algoritma: AES, RSA
+3. Keunggulan OAuth2:
 
-Hashing:
-1. Mengubah bentuk data untuk tujuan verifikasi.
-2. One-way (tidak bisa dikembalikan).
-3. Digunakan untuk menyimpan password atau verifikasi data.
-4. Contoh algoritma yang umum: MD5, SHA-256, bcrypt
+- Lebih Aman: Token bisa memiliki masa kadaluarsa dan hak akses terbatas.
+- Skalabilitas: Cocok untuk aplikasi besar dan mikroservis.
+- Kemudahan Integrasi: Mendukung login melalui penyedia pihak ketiga seperti Google atau GitHub.
 
-## Algoritma di Encryption and Hash
-Algoritma Enkripsi:
-
-1. AES (Advanced Encryption Standard):
-- Enkripsi simetris yang cepat dan aman.
-2. RSA (Rivest-Shamir-Adleman):
-- Enkripsi asimetris yang menggunakan kunci publik dan kunci privat.
-
-Algoritma Hashing:
-
-1. SHA-256 (Secure Hash Algorithm):
-- Menghasilkan hash sepanjang 256-bit.
-2. bcrypt:
-- Digunakan untuk hashing password dengan tambahan salt untuk keamanan ekstra.
-
-## Encryption and Hash Example in Node.js
-Contoh Encryption:
-
-```javascript
-const crypto = require('crypto');
-
-const algorithm = 'aes-256-cbc';
-const key = crypto.randomBytes(32);
-const iv = crypto.randomBytes(16);
-
-function encrypt(text) {
-    const cipher = crypto.createCipheriv(algorithm, key, iv);
-    let encrypted = cipher.update(text, 'utf-8', 'hex');
-    encrypted += cipher.final('hex');
-    return { encryptedData: encrypted, iv: iv.toString('hex') };
-}
-
-function decrypt(encryptedData, iv) {
-    const decipher = crypto.createDecipheriv(algorithm, key, Buffer.from(iv, 'hex'));
-    let decrypted = decipher.update(encryptedData, 'hex', 'utf-8');
-    decrypted += decipher.final('utf-8');
-    return decrypted;
-}
-
-const text = 'Hello, world!';
-const encrypted = encrypt(text);
-console.log('Encrypted:', encrypted);
-
-const decrypted = decrypt(encrypted.encryptedData, encrypted.iv);
-console.log('Decrypted:', decrypted);
-
-```
-
-Contoh Hashing:
-1. Instal `bcrypt`
-```bash
-npm install bcrypt
-```
-
-2. Ketik kode berikut:
-```javascript
-const bcrypt = require('bcrypt');
-
-async function hashPassword(password) {
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
-    console.log('Hashed Password:', hashedPassword);
-}
-
-async function verifyPassword(password, hashedPassword) {
-    const match = await bcrypt.compare(password, hashedPassword);
-    if (match) {
-        console.log('Password cocok!');
-    } else {
-        console.log('Password salah!');
-    }
-}
-
-// Contoh penggunaan
-const password = 'mypassword123';
-
-(async () => {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    console.log('Password Terhash:', hashedPassword);
-    await verifyPassword('mypassword123', hashedPassword); // Output: Password cocok!
-})();
-```
-
-# Tugas
-## Program Enkripsi dan Dekripsi dengan AES
-1. Buat program Node.js yang melakukan hal berikut:
-- Menggunakan modul crypto untuk mengenkripsi teks menggunakan algoritma AES-256-CBC.
-- Menghasilkan kunci (key) dan vektor inisialisasi (iv) secara acak.
-- Menerima input teks dan mengenkripsi teks tersebut.
-- Mendekripsi teks yang sudah dienkripsi dan menampilkan hasil dekripsinya.
-
-Contoh output:
-```bash
-Teks Asli: Halo, dunia!
-Hasil Enkripsi: 3f4d5e9a7c1b6d...
-Hasil Dekripsi: Halo, dunia!
-```
-
-## Program Hashing dan Verifikasi Password dengan bcrypt
-1. Buat program Node.js yang melakukan hal berikut:
-- Menggunakan modul bcrypt untuk meng-hash password.
-- Menerima input password dari pengguna.
-- Menghasilkan hash password dengan salt.
-- Memverifikasi apakah input password sesuai dengan hash yang dihasilkan.
-
-Contoh output:
-```bash
-Password: mypassword123
-Hash: $2b$10$e0Xq2...
-Verifikasi Berhasil: Password cocok!
-```
-### **Tabel Penilaian Tugas**
-
-| **Aspek Penilaian**           | **Deskripsi**                                                                 | **Skor Maksimal** |
-|-------------------------------|-------------------------------------------------------------------------------|-------------------|
-| **Fungsi Enkripsi dan Dekripsi** | Program dapat mengenkripsi dan mendekripsi teks dengan benar menggunakan AES. | 25                |
-| **Penggunaan Kunci dan IV**      | Menghasilkan kunci dan vektor inisialisasi secara acak dan menggunakannya dengan benar. | 10                |
-| **Fungsi Hashing Password**      | Program dapat meng-hash password dengan bcrypt dan menampilkan hash.         | 20                |
-| **Fungsi Verifikasi Hash**       | Program dapat memverifikasi password dengan hash yang sesuai.                | 20                |
-| **Kualitas Kode**                | Kode rapi, terstruktur, dan memiliki komentar yang menjelaskan setiap bagian penting. | 15                |
-| **Dokumentasi Singkat**          | Dokumentasi menjelaskan cara kerja program dan langkah-langkah yang diambil. | 10                |
-
-**Total Skor**: 100
-
-### **Rubrik Penilaian**
-
-| **Aspek**                    | **Skor Penuh (100%)**                                                       | **Skor Sebagian (50%)**                                              | **Tidak Memenuhi (0%)**                                 |
-|-------------------------------|-----------------------------------------------------------------------------|----------------------------------------------------------------------|---------------------------------------------------------|
-| **Enkripsi dan Dekripsi**    | Program mengenkripsi dan mendekripsi teks dengan benar menggunakan AES.    | Hanya bisa mengenkripsi atau mendekripsi, tidak keduanya.            | Program tidak mengenkripsi atau mendekripsi.           |
-| **Kunci dan IV**             | Menghasilkan kunci dan IV secara acak dan digunakan dengan benar.          | Menggunakan kunci dan IV statis.                                      | Tidak menggunakan kunci atau IV dengan benar.          |
-| **Hashing Password**         | Password di-hash dengan bcrypt dan hash ditampilkan.                       | Hash dibuat, tetapi tidak menggunakan bcrypt atau tidak ditampilkan. | Tidak ada proses hashing.                              |
-| **Verifikasi Hash**          | Verifikasi berhasil membandingkan password dengan hash.                    | Verifikasi hanya bekerja sebagian (misalnya, kasus tertentu saja).    | Verifikasi gagal atau tidak diimplementasikan.         |
-| **Kualitas Kode**            | Kode bersih, terstruktur, dan memiliki komentar yang menjelaskan.          | Kode berfungsi tetapi kurang rapi atau tidak memiliki komentar.       | Kode sulit dibaca, tidak terstruktur, atau error.      |
-| **Dokumentasi**              | Dokumentasi jelas menjelaskan cara kerja program.                          | Dokumentasi ada tetapi tidak lengkap atau membingungkan.              | Tidak ada dokumentasi.                                 |
-
-
-## Pengumpulan Tugas
-
-1. Format Pengumpulan:
-- Kode dalam format .js.
-- Dokumentasi dalam format .pdf atau .md.
-
-2. Cara Pengumpulan:
-- Unggah melalui platform pembelajaran atau kirim ke email dosen.
+Dalam metode tradisional, pengguna harus memberikan username dan password kepada setiap aplikasi yang ingin mereka akses. Ini berisiko jika aplikasi tersebut tidak aman atau mengalami kebocoran data. OAuth2 memberikan solusi dengan memungkinkan pengguna memberikan akses melalui token, tanpa harus berbagi password. Selain itu, OAuth2 mendukung kontrol izin yang lebih fleksibel dan cocok untuk aplikasi modern seperti API dan layanan mikro.
