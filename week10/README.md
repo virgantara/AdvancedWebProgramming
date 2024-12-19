@@ -45,3 +45,24 @@ Singkatnya:
 - Menggunakan dua kunci: kunci publik untuk enkripsi dan kunci privat untuk dekripsi.
 - Contoh: **RSA** (Rivest-Shamir-Adleman).
 - Use Case: Mengamankan transfer data seperti pertukaran kunci enkripsi.
+
+## Pengenalan modul `crypto` di NodeJS
+Modul `crypto` di NodeJS menyediakan fungsionalitas kriptografi yang mencakup sekumpulan pembungkus untuk fungsi `hash`, `HMAC`, `cipher`, `decipher`, `sign`, dan verifikasi OpenSSL. Modul ini memungkinkan untuk melakukan berbagai operasi keamanan, seperti hashing, enkripsi, dan dekripsi, secara langsung dalam aplikasi NodeJS. Kita akan mengeksplorasi apa itu modul `crypto`, fitur-fitur utamanya, dan cara menggunakannya untuk melakukan operasi kriptografi yang umum. Modul `crypto` di NodeJS adalah sudah bawaan dari NodeJS, yang berarti modul ini dibangun di dalam NodeJS dan tidak memerlukan dependensi eksternal apa pun.
+
+### Fitur-fitur `crypto`
+`crypto` memiliki beberapa fitur berikut:
+1. Hashing data.
+2. Encrypting and decrypting data using symmetric and asymmetric algorithms.
+3. Generating cryptographic signatures dan verifying them.
+4. Creating secure random numbers and keys.
+
+
+## Contoh Enkripsi Simetris
+Di sini, saya contohkan bagaimana mengenkripsi pesan teks menggunakan salah satu teknik enkripsi simetris yaitu AES. Contoh ini saya buat dengan menggunakan NodeJS.
+1. Buat sebuah file dengan nama `main.js`
+2. Isikan kode berikut di file `main.js` yang telah dibuat.
+3. Import library `crypto`
+```javascript
+const crypto = require('crypto');
+```
+
