@@ -1,4 +1,4 @@
-# Data Security with Encryption
+# Week 9 - Data Security with Encryption
 
 ## Introduction to Encryption
 Enkripsi adalah salah satu teknik utama dalam kriptografi yang digunakan untuk menjaga kerahasiaan informasi. Enkripsi bekerja dengan mengubah data asli (plaintext) menjadi data yang tidak dapat dibaca atau dipahami (ciphertext). Proses ini dilakukan dengan menggunakan algoritma enkripsi dan sebuah kunci (key). Untuk mengembalikan ciphertext menjadi plaintext, digunakan proses kebalikan yang disebut dekripsi. Enkripsi dapat dibagi menjadi dua jenis utama:

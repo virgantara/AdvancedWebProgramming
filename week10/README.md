@@ -1,4 +1,4 @@
-# Week 9 - Introduction to OAuth2
+# Week 10 - Introduction to OAuth2
 
 Topics:
 - Introduction to OAuth2
