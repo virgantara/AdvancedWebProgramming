@@ -49,6 +49,102 @@ Buat aplikasi RESTful API sederhana menggunakan Node.js, Express, dan MySQL yang
 | **< 60**       | Banyak fitur tidak berfungsi, kode berantakan, dan tidak ada dokumentasi.                                          |
 
 
+---
+## Panduan Automated Testing untuk Mini Project Node.js dengan MySQL
+Untuk memudahkan evaluasi mini project CRUD RESTful API dengan Node.js dan MySQL, automated testing sangat berguna untuk memastikan bahwa semua endpoint berfungsi dengan baik. Automated testing adalah proses menjalankan skrip untuk menguji aplikasi secara otomatis. Untuk mini project ini, siswa akan membuat tes untuk memastikan bahwa semua operasi CRUD berjalan dengan baik. Dengan testing otomatis, dosen dapat dengan cepat mengevaluasi apakah semua fitur sudah sesuai spesifikasi.
+
+### Tools dan Framework yang Digunakan
+1. **Mocha**: Framework untuk menjalankan tes di Node.js.
+2. **Chai**: Library untuk membuat asersi (assertions) dalam tes.
+3. **Supertest**: Library untuk menguji HTTP endpoints secara mudah.
+
+### Instalasi
+```bash
+npm install --save-dev mocha chai supertest
+```
+
+Tambahkan skrip untuk menjalankan tes di `package.json`:
+```json
+"scripts": {
+  "test": "mocha"
+}
+```
+### Langkah-langkah Implementasi Testing
+1. Struktur Direktori/Folder
+```bash
+mini-project/
+├── package.json
+├── server.js
+├── db.js
+└── test/
+    └── students.test.js
+```
+
+### Contoh Kode Testing
+1. Buat file `students.test.js` di folder `test/` untuk mengetes endpoint CRUD.
+
+```javascript
+const request = require('supertest');
+const { expect } = require('chai');
+const app = require('../server'); // Pastikan server.js mengekspor `app`
+
+describe('CRUD API untuk Mahasiswa', () => {
+
+  it('GET /api/students harus mengembalikan semua data mahasiswa', (done) => {
+    request(app)
+      .get('/api/students')
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.body).to.be.an('array');
+        done();
+      });
+  });
+
+
+  it('POST /api/students harus menambahkan mahasiswa baru', (done) => {
+    request(app)
+      .post('/api/students')
+      .send({ nim: '123456', nama: 'Budi', jurusan: 'Informatika' })
+      .expect(201)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.body).to.have.property('message').equal('Mahasiswa ditambahkan');
+        done();
+      });
+  });
+
+  it('PUT /api/students/:id harus memperbarui data mahasiswa', (done) => {
+    request(app)
+      .put('/api/students/1')
+      .send({ nim: '654321', nama: 'Andi', jurusan: 'Sistem Informasi' })
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.body).to.have.property('message').equal('Data mahasiswa diperbarui');
+        done();
+      });
+  });
+
+  it('DELETE /api/students/:id harus menghapus data mahasiswa', (done) => {
+    request(app)
+      .delete('/api/students/1')
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.body).to.have.property('message').equal('Data mahasiswa dihapus');
+        done();
+      });
+  });
+});
+
+```
+### Menjalankan Testing
+Jalankan perintah berikut di terminal:
+```bash
+npm test
+```
+Output seharusnya menunjukkan hasil pengujian untuk setiap endpoint CRUD.
 
 ---
 
