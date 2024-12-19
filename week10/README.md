@@ -70,8 +70,8 @@ Modul `crypto` di NodeJS menyediakan fungsionalitas kriptografi yang mencakup se
 
 ## Contoh Enkripsi Simetris
 Di sini, saya contohkan bagaimana mengenkripsi pesan teks menggunakan salah satu teknik enkripsi simetris yaitu AES. Contoh ini saya buat dengan menggunakan NodeJS.
-1. Buat sebuah file dengan nama `main.js`
-2. Isikan kode berikut di file `main.js` yang telah dibuat.
+1. Buat sebuah file dengan nama `enkripsi_aes.js`
+2. Isikan kode berikut di file `enkripsi_aes.js` yang telah dibuat.
 3. Import library `crypto`
 ```javascript
 const crypto = require('crypto');
@@ -109,7 +109,7 @@ function decrypt(pesanTerenkripsi, ivHex){
 }
 ```
 
-7. Penggunaan fungsi `encrypt()` dan `decrypt()`
+7. Penggunaan fungsi `encrypt()` dan `decrypt()`. Buat sebuah file dengan nama `main.js` dan isi dengan kode berikut:
 ```javascript
 const {encrypt, decrypt} = require('./enkripsi_aes.js')
 
@@ -121,5 +121,135 @@ console.log("Pesan terenkripsi:", encrypted.encryptedData)
 const pesanDekripsi = decrypt(encrypted.encryptedData, encrypted.iv)
 console.log("Pesan asli:", pesanDekripsi)
 ```
-8. Catatan tambahan
+
+8. Jalankan file `main.js` di terminal dengan cara:
+```bash
+node main.js
+```
+9. Catatan tambahan
 Fungsi `encrypt()` dan `decrypt()` serta kode pada nomor 3 hingga 6 saya taruh pada file dengan nama `enkripsi_aes.js`. File ini saya gunakan sebagai `module` untuk memudahkan pengelolaan kode dalam NodeJS
+
+---
+
+## Contoh Enkripsi Asimetris
+Di sini, saya contohkan bagaimana mengenkripsi pesan teks menggunakan salah satu teknik enkripsi asimetris yaitu RSA. Contoh ini saya buat dengan menggunakan NodeJS.
+1. Buat sebuah file dengan nama `enkripsi_rsa.js`
+2. Isikan kode berikut di file `enkripsi_rsa.js` yang telah dibuat.
+3. Import library `crypto`
+```javascript
+const crypto = require('crypto');
+```
+
+4. Buat pasangan `privateKey` dan `publicKey`
+```javascript
+const {publicKey, privateKey} = crypto.generateKeyPairSync('rsa', {
+    modulusLength: 2048,
+    publicKeyEncoding: {
+        type: 'pkcs1',
+        format: 'pem'
+    },
+    privateKeyEncoding:{
+        type: 'pkcs1',
+        format: 'pem'
+    }
+})
+```
+
+5. Buat fungsi enkripsi. 
+```javascript
+function enkrip(teks){
+    const encrypted = crypto.publicEncrypt(publicKey, Buffer.from(teks))
+    return encrypted.toString('base64')
+}
+```
+
+6. Buat fungsi dekripsi.
+```javascript
+function dekrip(teksTerenkripsi){
+    const decrypted = crypto.privateDecrypt(privateKey, Buffer.from(teksTerenkripsi, 'base64'))
+    return decrypted.toString('utf8')
+}
+```
+
+7. Export sebagai modul
+```javascript
+module.exports = {enkrip, dekrip}
+```
+
+8. Penggunaan fungsi `enkrip()` dan `dekrip()`. Buat sebuah file dengan nama `main_asimetris.js` dan isi dengan kode berikut:
+```javascript
+const {enkrip, dekrip} = require('./enkripsi_rsa.js')
+
+const teks = "Assalamualaikum"
+const encrypted = enkrip(teks)
+
+console.log("Pesan terenkripsi:", encrypted)
+
+const pesanDekripsi = dekrip(encrypted)
+console.log("Pesan asli:", pesanDekripsi)
+```
+
+9. Jalankan file `main_asimetris.js` dengan cara
+```bash
+node main_asimetris.js
+```
+## Contoh Generate Public dan Private Key dengan `openssl`
+
+### Apa itu OpenSSL?
+OpenSSL adalah *library* kriptografi yang menawarkan aplikasi *open-source* dari protokol TLS. OpenSSL memungkinkan pengguna untuk melakukan berbagai hal yang berhubungan dengan SSL, termasuk pembuatan CSR (*Certificate Signing Request*), pembuatan `private_key`, dan instalasi sertifikat SSL.
+
+### Instalasi OpenSSL
+**Windows**. Silakan melihat tutorial di [sini](https://www.xolphin.com/support/OpenSSL/OpenSSL_-_Installation_under_Windows) atau video di [sini](https://www.youtube.com/watch?v=coaGBdUcKiw) untuk instalasi di Windows.
+
+**Ubuntu**. OpenSSL sudah tersedia di sistem operasi Ubuntu
+
+### Cara menggunakan OpenSSL untuk generate pasangan kunci private dan public.
+1. Pertama, jalankan perintah ini di terminal untuk membuat `private key`
+```bash
+openssl genpkey -algorithm RSA -out private_key.pem
+```
+
+2. Kedua, jalankan perintah ini di terminal untuk membuat `public key`. Sebagai catatan, untuk membuat `public key`, diperlukan `private key` yang telah dibuat sebelumnya.
+```bash
+openssl rsa -pubout -in private_key.pem -out public_key.pem
+```
+3. Setelah itu, ada dua buah file dengan ekstensi `*.pem` di folder tempat key ini dibuat, yaitu `private_key.pem` dan `public_key.pem`
+
+4. Buat file baru dengan nama `enkripsi_rsa_openssl.js`, isikan kode berikut:
+```javascript
+const crypto = require('crypto');
+const fs = require('fs')
+
+const publicKey = fs.readFileSync('public_key.pem', 'utf8')
+const privateKey = fs.readFileSync('private_key.pem', 'utf8')
+
+function enkrip(teks){
+    const encrypted = crypto.publicEncrypt(publicKey, Buffer.from(teks))
+    return encrypted.toString('base64')
+}
+
+function dekrip(teksTerenkripsi){
+    const decrypted = crypto.privateDecrypt(privateKey, Buffer.from(teksTerenkripsi, 'base64'))
+    return decrypted.toString('utf8')
+}
+
+module.exports = {enkrip, dekrip}
+```
+
+5. Penggunaan fungsi `enkrip()` dan `dekrip()`. Buat sebuah file dengan nama `main_asimetris_openssl.js` dan isi dengan kode berikut:
+```javascript
+const {enkrip, dekrip} = require('./enkripsi_rsa_openssl.js')
+
+const teks = "Assalamualaikum"
+const encrypted = enkrip(teks)
+
+console.log("Pesan terenkripsi:", encrypted)
+
+const pesanDekripsi = dekrip(encrypted)
+console.log("Pesan asli:", pesanDekripsi)
+```
+
+6. Jalankan file `main_asimetris_openssl.js` dengan cara
+```bash
+node main_asimetris_openssl.js
+```

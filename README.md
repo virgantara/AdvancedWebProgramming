@@ -14,7 +14,7 @@ Prasyarat:
 ## [Week 7 - Web Security - Authentication and Authorization in NodeJS](week07/README.md)
 ## [Week 8 - Individual Mini-Project](week08/README.md)
 ## [Week 9 - Introduction to OAuth2](week09/README.md)
-## [Week 10 - Web Security - Data Security with Encryption](week10/README.md)
+## [Week 10 - Data Security - Intro to Encryption](week10/README.md)
 ## [Week 11 - Data Security - ](week11/README.md)
 ## [Week 12	- Full CRUD API with encrypted data](week12/README.md)
 ## [Week 13 - ](week13/README.md)
