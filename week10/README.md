@@ -141,3 +141,164 @@ client_secret=CLIENT_SECRET
 Hasilnya, Authorization server memberikan *access token* baru.
 
 # Implementasi OAuth2 di NodeJS
+
+## Instalasi Paket yang Diperlukan
+Sebelum memulai, instal paket yang diperlukan dengan perintah berikut:
+```bash
+npm init -y
+npm install express oauth2-server body-parser
+```
+
+## Struktur Proyek
+Buatlah sebuah direktori dengan nama tertentu, misalnya, `proyek_oauth2`. Buatlah beberapa file, yaitu: `server.js`, `model.js`. Tambahkan satu subdirektori, yaitu: `routes` dan buat file baru di dalamnya dengan nama `auth.js`. Berikut struktur kode yang telah dibuat:
+```makefile
+proyek_oauth2/
+│-- server.js
+│-- model.js
+└-- routes/
+    └-- auth.js
+```
+
+## Membuat Model untuk OAuth2
+Edit file `model.js` untuk mendefinisikan fungsi yang diperlukan oleh `oauth2-server` 
+```javascript
+const crypto = require('crypto');
+
+const clients = [
+  { clientId: 'abc123', clientSecret: 'contoh_client_secret', redirectUris: ['http://localhost:3000/callback'], grants: ['authorization_code'] }
+];
+
+const tokens = {};
+const authorizationCodes = {};
+
+module.exports = {
+  getClient: (clientId, clientSecret) => {
+    return clients.find(client => client.clientId === clientId && client.clientSecret === clientSecret);
+  },
+
+  saveAuthorizationCode: (code, client, user) => {
+    authorizationCodes[code.authorizationCode] = { client, user, expiresAt: code.expiresAt };
+    return code;
+  },
+
+  getAuthorizationCode: (authorizationCode) => {
+    return authorizationCodes[authorizationCode];
+  },
+
+  revokeAuthorizationCode: (code) => {
+    delete authorizationCodes[code.authorizationCode];
+    return true;
+  },
+
+  saveToken: (token, client, user) => {
+    tokens[token.accessToken] = { client, user, expiresAt: token.accessTokenExpiresAt };
+    return { accessToken: token.accessToken, accessTokenExpiresAt: token.accessTokenExpiresAt, client, user };
+  },
+
+  getAccessToken: (accessToken) => {
+    return tokens[accessToken];
+  }
+};
+```
+
+## Membuat Server OAuth2
+Edit file `server.js` untuk mengatur server Express dan middleware OAuth2 dan isikan kode berikut:
+```javascript
+const express = require('express');
+const bodyParser = require('body-parser');
+const OAuth2Server = require('oauth2-server');
+const model = require('./model');
+
+const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+const oauth = new OAuth2Server({
+  model,
+  grants: ['authorization_code'],
+  allowBearerTokensInQueryString: true
+});
+
+
+app.use('/oauth/authorize', (req, res, next) => {
+  const request = new OAuth2Server.Request(req);
+  const response = new OAuth2Server.Response(res);
+
+  oauth.authorize(request, response, {
+    authenticateHandler: {
+      handle: () => {
+        return { id: 1, username: 'user' }; // User dummy
+      }
+    }
+  })
+  .then((code) => {
+    res.json(code);
+  })
+  .catch((err) => {
+    res.status(err.code || 500).json(err);
+  });
+});
+
+
+app.post('/oauth/token', (req, res) => {
+  const request = new OAuth2Server.Request(req);
+  const response = new OAuth2Server.Response(res);
+
+  oauth.token(request, response)
+    .then((token) => {
+      res.json(token);
+    })
+    .catch((err) => {
+      res.status(err.code || 500).json(err);
+    });
+});
+
+
+app.get('/secure', (req, res, next) => {
+  const request = new OAuth2Server.Request(req);
+  const response = new OAuth2Server.Response(res);
+
+  oauth.authenticate(request, response)
+    .then(() => {
+      res.json({ message: 'Anda berhasil mengakses endpoint yang dilindungi!' });
+    })
+    .catch((err) => {
+      res.status(err.code || 500).json(err);
+    });
+});
+
+app.listen(3000, () => {
+  console.log('Server berjalan di http://localhost:3000');
+});
+```
+
+## Menguji OAuth2 Server
+
+### 1. Mendapatkan Authorization Code
+Gunakan URL berikut untuk mendapatkan *authorization code*:
+```bash
+http://localhost:3000/oauth/authorize?response_type=code&client_id=abc123&redirect_uri=http://localhost:3000/callback
+```
+
+### 2. Menukar Authorization Code dengan Access Token
+Gunakan Postman atau cURL untuk menukar *authorization code* dengan *access token*:
+```bash
+curl -X POST http://localhost:3000/oauth/token \
+  -d "grant_type=authorization_code" \
+  -d "code=AUTHORIZATION_CODE" \
+  -d "redirect_uri=http://localhost:3000/callback" \
+  -d "client_id=abc123" \
+  -d "client_secret=contoh_client_secret"
+```
+
+### 3. Mengakses Endpoint yang Dilindungi
+Gunakan *access token* untuk mengakses endpoint `/secure`:
+
+```bash
+curl http://localhost:3000/secure -H "Authorization: Bearer ACCESS_TOKEN"
+```
+
+Jika token valid, responnya akan berupa:
+```bash
+{ "message": "Anda berhasil mengakses endpoint yang dilindungi!" }
+```
