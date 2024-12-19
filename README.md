@@ -15,9 +15,9 @@ Prasyarat:
 ## [Week 8 - Individual Mini-Project](week08/README.md)
 ## [Week 9 - Introduction to OAuth2](week09/README.md)
 ## [Week 10 - Web Security - Data Security with Encryption](week10/README.md)
-## [Week 11 - Data Security - ]
-## [Week 12	- ]
-## [Week 13 - ]
-## [Week 14 - ]
-## [Week 15 - ]
-## [Week 16 - ]
+## [Week 11 - Data Security - ](week11/README.md)
+## [Week 12	- Full CRUD API with encrypted data](week12/README.md)
+## [Week 13 - ](week13/README.md)
+## [Week 14 - ](week14/README.md)
+## [Week 15 - ](week15/README.md)
+## [Week 16 - ](week16/README.md)
