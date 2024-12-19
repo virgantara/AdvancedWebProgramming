@@ -66,6 +66,8 @@ Modul `crypto` di NodeJS menyediakan fungsionalitas kriptografi yang mencakup se
 3. Membuat signature kriptografi dan verifikasi
 4. Membuat angka random dan kunci yang aman
 
+---
+
 ## Contoh Enkripsi Simetris
 Di sini, saya contohkan bagaimana mengenkripsi pesan teks menggunakan salah satu teknik enkripsi simetris yaitu AES. Contoh ini saya buat dengan menggunakan NodeJS.
 1. Buat sebuah file dengan nama `main.js`
