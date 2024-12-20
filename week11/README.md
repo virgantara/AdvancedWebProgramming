@@ -1,4 +1,4 @@
-# Week 11 - Introduction to OAuth2
+# Week 11 - OAuth2 with NodeJS and MySQl
 
 Topics:
 - Introduction to OAuth2
