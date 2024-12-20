@@ -15,12 +15,16 @@ project-folder/
 │   └-- model.js              
 │
 │-- routes/
-│   ├-- authorize.js          
-│   └-- token.js              
+│   └-- routes.js                        
 │
 │-- db.js                     
 │-- server.js                 
 │-- package.json            
+```
+## Instalasi Library yang diperlukan
+```bash
+npm init -y
+npm install express oauth2-server body-parser mysql2
 ```
 
 ## Tahapan yang perlu dilakukan
@@ -107,7 +111,7 @@ Oiya, jangan lupa membuat database terlebih dahulu di MySQL. Ada tiga tabel yang
 
   ALTER TABLE `oauth_tokens`
     ADD CONSTRAINT `oauth_tokens_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-    ADD CONSTRAINT `oauth_tokens_ibfk_2` FOREIGN KEY (`client_id`) REFERENCES `oauth_clients` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+    ADD CONSTRAINT `oauth_tokens_ibfk_2` FOREIGN KEY (`client_id`) REFERENCES `oauth_clients` (`client_id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
   COMMIT;
   ```
@@ -132,3 +136,92 @@ module.exports = connection;
 File `db.js` membuat koneksi ke MySQL menggunakan pustaka `mysql2`. Fungsi `createConnection` memuat konfigurasi dari `db.json`. Jika koneksi berhasil, pesan sukses ditampilkan di konsol. Jika terjadi kesalahan, pesan error akan ditampilkan. File ini akan digunakan untuk semua operasi database dalam aplikasi.
 
 5. Buatlah sebuah file dengan nama `model.js`, dan taruh di `root` atau `working` direktori project `oauth_server`. Sebelum membuat file ini, ada beberapa hal yang perlu diketahui terkait model ini. Jika merujuk pada dokumentasi library NodeJS [`oauth2-server`](https://oauth2-server.readthedocs.io/en/latest/model/spec.html), `model.js`, model ini bertindak sebagai jembatan antara server OAuth2 dan basis data Anda, yang memungkinkan server untuk melakukan operasi penting seperti memvalidasi klien, menyimpan dan mengambil token akses, kode otorisasi, dan data pengguna.
+
+Berikut ini adalah isi dari `model.js`:
+```javascript
+const db = require('../db');
+
+module.exports.getClient = (clientId, clientSecret) => {
+
+  return new Promise((resolve, reject) => {
+    const query = 'SELECT * FROM oauth_clients WHERE client_id = ? and client_secret = ? ';
+    db.query(query, [clientId, clientSecret], (err, results) => {
+
+      if (err) return reject(err);
+
+      if(results.length == 0)
+        return reject(null)
+      
+      const client = {
+        id: results[0].client_id,
+        redirectUris: results[0].redirect_uri,
+        grants: ['authorization_code']
+      }
+      resolve(client);
+    });
+  })
+  
+}
+```
+
+Fungsi `getClientById` mengambil data klien dari tabel `oauth_clients` berdasarkan `clientId` dan `clientSecret`. Jika klien ditemukan, data klien dikembalikan dalam bentuk objek. Fungsi ini penting untuk memvalidasi klien yang ingin mendapatkan *authorization code* atau *access token*.
+
+6. Buatlah sebuah file dengan nama `routes.js`, dan taruh di `routes` direktori project `oauth_server`. Berikut isi dari `routes.js`
+```javascript
+const express = require('express');
+const OAuth2Server = require('oauth2-server');
+const model = require('../models/model');
+
+const router = express.Router();
+const oauth = new OAuth2Server({ model });
+
+router.get('/authorize', (req, res) => {
+  const request = new OAuth2Server.Request(req);
+  const response = new OAuth2Server.Response(res);
+
+  oauth.authorize(request, response, {
+    authenticateHandler: {
+      handle: () => ({ id: 1, username: 'user' }) // Dummy user
+    }
+  }).then(code => res.json(code))
+    .catch(err => res.status(err.code || 500).json(err));
+});
+
+module.exports = router;
+```
+
+7. Buatlah sebuah file dengan nama `server.js`, dan taruh di `root` atau `working` direktori project `oauth_server`. Berikut isi dari `server.js`
+
+  1. Import library yang diperlukan
+```javascript
+const express = require('express');
+const bodyParser = require('body-parser');
+const OAuth2Server = require('oauth2-server');
+const model = require('./models/model');
+
+const router = require('./routes/routes');
+```
+  2. Inisiasi `express`
+```javascript
+const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+```
+
+  3. Tambahkan routing 
+```javascript
+app.use('/oauth', router);
+```
+  4. Tambahkan script untuk listening server
+```javascript
+app.listen(3000, () => {
+  console.log('Server berjalan di http://localhost:3000');
+});
+```
+### Penjelasan
+1. Endpoint /oauth/authorize:
+- Digunakan untuk meminta authorization code.
+- Mengautentikasi pengguna dan memproses permintaan otorisasi.
+- Jika sukses, mengembalikan authorization code yang bisa digunakan untuk mendapatkan access token.
+
+  

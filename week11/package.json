@@ -1,0 +1,19 @@
+{
+  "name": "week11",
+  "version": "1.0.0",
+  "description": "Menggunakan MySQL untuk OAuth2 server memberikan solusi penyimpanan yang stabil, skalabel, dan terstruktur untuk data autentikasi dan otorisasi. Dengan MySQL, kita dapat menyimpan klien, token, dan kode otorisasi secara persisten. Ini sangat berguna untuk aplikasi berskala besar di mana data harus tetap tersedia meskipun server restart. Selain itu, MySQL memiliki dukungan transaksi, indexing, dan fitur keamanan yang memastikan data tetap aman dan cepat diakses.",
+  "main": "db.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "express": "^4.21.2",
+    "mysql2": "^3.11.5",
+    "oauth2-server": "^3.1.1"
+  }
+}
