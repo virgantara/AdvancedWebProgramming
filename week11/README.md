@@ -44,7 +44,7 @@ npm install express oauth2-server body-parser mysql2
 ```
 Konfigurasi ini menyimpan informasi koneksi ke database MySQL dalam format JSON. Dengan memisahkan kredensial ke dalam file `db.json`, kode menjadi lebih rapi dan lebih mudah diubah tanpa perlu memodifikasi kode utama. Format JSON ini berisi `host`, `user`, `password`, dan `database` yang digunakan untuk menghubungkan aplikasi ke MySQL.
 
-Oiya, jangan lupa membuat database terlebih dahulu di MySQL. Ada tiga tabel yang diperlukan:
+Oiya, jangan lupa membuat database terlebih dahulu di MySQL. Ada empat tabel yang diperlukan:
   1. Tabel `users`
 
   Berikut ini SQL dari tabel `users`:
@@ -115,11 +115,41 @@ Oiya, jangan lupa membuat database terlebih dahulu di MySQL. Ada tiga tabel yang
 
   COMMIT;
   ```
-  
+  4. Tabel `oauth_authorization_codes`.
+
+  Berikut SQL-nya:
+  ```sql
+START TRANSACTION;
+
+CREATE TABLE `oauth_authorization_codes` (
+  `id` int NOT NULL,
+  `authorization_code` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `client_id` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `user_id` int NOT NULL,
+  `expires_at` datetime NOT NULL,
+  `redirect_uri` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `scope` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `used` tinyint(1) DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+
+
+ALTER TABLE `oauth_authorization_codes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `client_id` (`client_id`),
+  ADD KEY `user_id` (`user_id`);
+
+ALTER TABLE `oauth_authorization_codes`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `oauth_authorization_codes`
+  ADD CONSTRAINT `oauth_authorization_codes_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `oauth_clients` (`client_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `oauth_authorization_codes_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+COMMIT;
+  ```
 4. Buatlah sebuah file dengan nama `db.js`, dan taruh di `root` atau `working` direktori project `oauth_server`. Adapun isi dari `db.js` adalah:
 ```javascript
 const mysql = require('mysql2');
-const config = require('../config/db.json');
+const config = require('./config/db.json');
 
 const connection = mysql.createConnection(config);
 
@@ -149,8 +179,10 @@ module.exports.getClient = (clientId, clientSecret) => {
 
       if (err) return reject(err);
 
-      if(results.length == 0)
-        return reject(null)
+      if(results.length === 0){
+        
+        return reject('client_id not found');
+      }
       
       const client = {
         id: results[0].client_id,
@@ -159,12 +191,41 @@ module.exports.getClient = (clientId, clientSecret) => {
       }
       resolve(client);
     });
-  })
-  
+  }) 
 }
-```
 
-Fungsi `getClientById` mengambil data klien dari tabel `oauth_clients` berdasarkan `clientId` dan `clientSecret`. Jika klien ditemukan, data klien dikembalikan dalam bentuk objek. Fungsi ini penting untuk memvalidasi klien yang ingin mendapatkan *authorization code* atau *access token*.
+module.exports.saveAuthorizationCode = (code, client, user) => {
+  return new Promise((resolve, reject) => {
+    const query = `
+    INSERT INTO oauth_authorization_codes (authorization_code, client_id, user_id, expires_at, redirect_uri,scope) 
+    VALUES (?, ?, ?, ?, ?, ?)
+    `;
+
+    let params = [code.authorizationCode, client.id, user.id, code.expiresAt, code.redirectUri,code.scope]
+    db.query(query, params, (err, res)=>{
+        if(err){
+            console.error(err)
+            return reject(err)
+        }
+
+        const authCode = {
+            authorizationCode: code.authorizationCode,
+            expiresAt: code.expiresAt,
+            redirectUri: client.redirectUris[0],
+            client: client,
+            user: user,
+            scope: code.scope
+        };
+
+        resolve(authCode)
+    })
+  })
+};
+```
+Fungsi `getClient` mengambil data klien dari tabel `oauth_clients` berdasarkan `clientId`. Jika klien ditemukan, data klien dikembalikan dalam bentuk objek. Fungsi ini penting untuk memvalidasi klien yang ingin mendapatkan *authorization code* atau *access token*.
+
+Selain fungsi `getClient`, di file `model.js` memerlukan fungsi lain `saveAuthorizationCode`. Fungsi ini untuk menyimpan `authorization code` yang di-*generate* oleh OAuth. Dua fungsi ini adalah mandatory dari `oauth2-server` ketika fungsi `.authorize()` dipanggil.
+
 
 6. Buatlah sebuah file dengan nama `routes.js`, dan taruh di `routes` direktori project `oauth_server`. Berikut isi dari `routes.js`
 ```javascript
@@ -178,17 +239,35 @@ const oauth = new OAuth2Server({ model });
 router.get('/authorize', (req, res) => {
   const request = new OAuth2Server.Request(req);
   const response = new OAuth2Server.Response(res);
+  try{
 
-  oauth.authorize(request, response, {
-    authenticateHandler: {
-      handle: () => ({ id: 1, username: 'user' }) // Dummy user
-    }
-  }).then(code => res.json(code))
-    .catch(err => res.status(err.code || 500).json(err));
+    oauth.authorize(request, response, {
+      authenticateHandler: {
+        handle: (req) => {
+          return {id : req.query.user_id}
+        }
+
+      }
+    }).then(code => {
+      res.json(code)
+    })
+    .catch(err => {
+      console.error(err)
+      res.status(err.code || 500).json(err)
+    });
+  }
+  catch(error){
+    console.error(error)
+    res.status(500).json("Something is wrong")
+  }
 });
 
 module.exports = router;
 ```
+
+Fungsi dari `authenticateHandler` dalam `oauth2-server` adalah untuk menentukan bagaimana pengguna diotentikasi selama proses otorisasi. Pada proses OAuth2, sebelum kode otorisasi diberikan, server perlu memastikan bahwa pengguna sudah diotentikasi dengan benar.
+
+Dalam konteks metode `authorize`, `authenticateHandler` memungkinkan Anda untuk menyediakan logika kustom untuk mengautentikasi pengguna. Hal ini berguna ketika Anda ingin memberikan kebebasan lebih terkait bagaimana otentikasi pengguna dilakukan, misalnya melalui `session`, `token`, atau mekanisme lainnya.
 
 7. Buatlah sebuah file dengan nama `server.js`, dan taruh di `root` atau `working` direktori project `oauth_server`. Berikut isi dari `server.js`
 
@@ -224,4 +303,107 @@ app.listen(3000, () => {
 - Mengautentikasi pengguna dan memproses permintaan otorisasi.
 - Jika sukses, mengembalikan authorization code yang bisa digunakan untuk mendapatkan access token.
 
+### Cara mendapatkan authorization_code
+Jalankan perintah berikut:
+```bash
+curl -X GET "http://localhost:3000/oauth/authorize?response_type=code&client_id=abc123&state=random_state&redirect_uri=http://localhost:3000/callback&user_id=1"
+```
+
+Output jika sukses:
+```json
+{
+  "authorizationCode":"7307a253de9d9f6b17931296f0bdda333a4e28bd",
+  "expiresAt":"2024-12-20T09:20:25.667Z",
+  "redirectUri":"h",
+  "client":{
+    "id":"abc123",
+    "redirectUris":"http://localhost:3000/callback",
+    "grants":["authorization_code"]
+  },
+  "user":{
+    "id":"1"
+  }
+}
+```
+
+## Mendapatkan Access Token dengan Authorization Code
+Setelah mendapatkan `authorizationCode`, selanjutnya adalah mendapatkan `accessToken` yang nantinya digunakan untuk mengakses *resource* atau *endpoints* yang lain.
+
+### Tahapan mendapatkan `accessToken`
+1. Tambahkan endpoint berikut ke file `routes.js`:
+```javascript
+router.post('/token', (req, res) => {
+
+  const request = new OAuth2Server.Request(req);
+  const response = new OAuth2Server.Response(res);
   
+  oauth.token(request, response)
+    .then(code => {
+      res.json(code)
+    })
+    .catch(err => {
+      console.error(err)
+      res.status(err.code || 500).json(err)
+    });
+});
+```
+
+2. Sebelum melakukan request token, ada hal-hal yang perlu diperhatikan:
+  1. `Content-Type` di header request harus `application/x-www-form-urlencoded`
+  2. Method harus `POST`
+
+3. Tambahkan fungsi `getAuthorizationCode` dan `revokeAuthorizationCode` berikut di `models/model.js`:
+```javascript
+module.exports.getAuthorizationCode = (authorizationCode) => {
+  return new Promise((resolve, reject) => {
+      db.query('SELECT * FROM oauth_authorization_codes WHERE authorization_code = ?', [authorizationCode], (err, results) => {
+          if (err) {
+              console.error("getAuthorizationCode ERROR:",err)
+              return reject(err)
+
+          };
+
+          if (results.length === 0) return resolve(false);
+          
+          const hasil = {
+              code: results[0].authorization_code,
+              scope: results[0].scope,
+              expiresAt: results[0].expires_at,
+              redirectUri: results[0].redirect_uri,
+              client: { id: results[0].client_id },
+              user: { id: results[0].user_id }
+          }
+
+          resolve(hasil);
+      });
+  })
+};
+
+module.exports.revokeAuthorizationCode = (code) => {
+  return new Promise((resolve, reject) => {
+      db.query('DELETE FROM oauth_authorization_codes WHERE authorization_code = ?', [code.authorizationCode], (err) => {
+          if (err) {
+              console.error("Error Deleting auth code",err)
+              return reject(err)
+          }
+
+          resolve(true)
+      });    
+  })
+    
+}
+
+module.exports.saveToken = async (token, client, user) => {
+  const accessToken = {
+    accessToken: token.accessToken,
+    accessTokenExpiresAt: token.accessTokenExpiresAt,
+    refreshToken: token.refreshToken,
+    refreshTokenExpiresAt: token.refreshTokenExpiresAt,
+    client: client,
+    user: user,
+  };
+
+  await storeToken(token.accessToken, token.refreshToken, token.accessTokenExpiresAt, token.refreshTokenExpiresAt, user.id, client.id);
+  return accessToken;
+};
+```

@@ -101,7 +101,7 @@ function encrypt(pesan) {
 function decrypt(pesanTerenkripsi, ivHex){
     const decipher = crypto.createDecipheriv('aes-256-cbc',key, Buffer.from(ivHex,'hex'))
 
-    let decrypted = decipher.update(encryptedData, 'hex','utf8')
+    let decrypted = decipher.update(pesanTerenkripsi, 'hex','utf8')
 
     decrypted += decipher.final('utf8')
 
