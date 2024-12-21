@@ -109,7 +109,12 @@ function decrypt(pesanTerenkripsi, ivHex){
 }
 ```
 
-7. Penggunaan fungsi `encrypt()` dan `decrypt()`. Buat sebuah file dengan nama `main.js` dan isi dengan kode berikut:
+7. Tambahkan script berikut di file `enkripsi_aes.js`, letakkan paling bawah
+```javascript
+module.exports = {encrypt, decrypt}
+```
+
+8. Penggunaan fungsi `encrypt()` dan `decrypt()`. Buat sebuah file dengan nama `main.js` dan isi dengan kode berikut:
 ```javascript
 const {encrypt, decrypt} = require('./enkripsi_aes.js')
 
@@ -122,11 +127,11 @@ const pesanDekripsi = decrypt(encrypted.encryptedData, encrypted.iv)
 console.log("Pesan asli:", pesanDekripsi)
 ```
 
-8. Jalankan file `main.js` di terminal dengan cara:
+9. Jalankan file `main.js` di terminal dengan cara:
 ```bash
 node main.js
 ```
-9. Catatan tambahan
+10. Catatan tambahan
 Fungsi `encrypt()` dan `decrypt()` serta kode pada nomor 3 hingga 6 saya taruh pada file dengan nama `enkripsi_aes.js`. File ini saya gunakan sebagai `module` untuk memudahkan pengelolaan kode dalam NodeJS
 
 ---
